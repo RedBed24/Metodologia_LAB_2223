@@ -8,16 +8,29 @@ public class Burbuja {
 	}
 	
 	public static void burbuja(int[] t) {
-		int seguir = 1;
-		int p = 0;
-		while (seguir != t.length) {
-			while (t[p] > t[p + 1]) {
-				int aux = t[p];
-				t[p] = t[p + 1];
-				t[p + 1] = aux;
+		/* Sirve para saber si ha sido necesario reordenar durante una iteración en específico */
+		boolean reordenadoEnIteración = true;
+		int aux, i;
+
+		/* mientras hayamos tenido que reordenar durante la iteración pasada */
+		while (reordenadoEnIteración) {
+			/* Suponemos que no vamos a tener que reordenar más, y por tanto, podremos salir */
+			reordenadoEnIteración = false;
+
+			/* recoremos el vector, empezando en 1 hasta t.length ya que iremos viendo una posición y la anterior
+			 * Hacemos esto ya que, de esta manera, nos ahorramos una resta (t.length - 1) en cada iteración */
+			for (i = 1; i < t.length; i++) {
+				/* Ajustamos los índices */
+				if (t[i - 1] > t[i]) {
+					/* intercambiamos las posciones */
+					aux = t[i - 1];
+					t[i - 1] = t[i];
+					t[i] = aux;
+					/* Marcamos que hemos tenido que hacer una iteración
+					 * Por tanto, en la siguiente iteración revisaremos si ya está ordenado */
+					reordenadoEnIteración = true;
+				}
 			}
-			p++;
-			seguir++;
 		}
 	}
 	
