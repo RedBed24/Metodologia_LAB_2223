@@ -4,9 +4,9 @@ import profes.leer;
 public class Sesion1 {
 
 	public static void main(String[] args) {
-		long[][] tiempoPasado = new long[5][5];
 		String[] fotoEntrada = { "1024x1024.png", "1536x1536.png", "320x214.png", "640x360.png", "640x427.png" };
-		String[] fotoSalida = new String[5];
+		long[][] tiempoPasado = new long[fotoEntrada.length][5];
+		String fotoSalida;
 		long tiempoActual;
 		int[] histograma = null;
 		boolean calcularTiempoNano = 's' == Character.toLowerCase(leer.caracter(
@@ -20,7 +20,7 @@ public class Sesion1 {
 				 * "Elige un apartado: ['A', 'B', 'C', 'D', 'S'] (Selecionar 'S' sale del programa):"
 				 * ))) { case 'a':
 				 */
-				for (int i = 0; i < 5; i++) {
+				for (int i = 0; i < fotoEntrada.length; i++) {
 					/* = leer.cadena("Introduce el nombre de la foto del apartado A:"); */
 
 					if (!fotoEntrada[i].endsWith(".png")) {
@@ -28,11 +28,11 @@ public class Sesion1 {
 						throw new Exception();
 					}
 
-					fotoSalida[i] = fotoEntrada[i].substring(0, fotoEntrada[i].length() - 4) + "_g.png";
+					fotoSalida = fotoEntrada[i].substring(0, fotoEntrada[i].length() - 4) + "_g.png";
 
 					tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
-					Auxiliar.GenerarImagenGrises(fotoEntrada[i], fotoSalida[i]);
-					tiempoPasado[0][i] = calcularTiempoNano ? System.nanoTime()
+					Auxiliar.GenerarImagenGrises(fotoEntrada[i], fotoSalida);
+					tiempoPasado[i][0] = calcularTiempoNano ? System.nanoTime()
 							: System.currentTimeMillis() - tiempoActual;
 				/*
 				 * break; case 'b':
@@ -40,7 +40,7 @@ public class Sesion1 {
 					/* String ruta = leer.cadena("Escribe la ruta de la foto del apartado B: "); */
 					tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 					histograma = Auxiliar.HistogramaImagen(fotoEntrada[i]);
-					tiempoPasado[1][i] = calcularTiempoNano ? System.nanoTime()
+					tiempoPasado[i][1] = calcularTiempoNano ? System.nanoTime()
 							: System.currentTimeMillis() - tiempoActual;
 
 				/*
@@ -55,7 +55,7 @@ public class Sesion1 {
 					System.out.println("El histograma de la imagen anterior es:");
 					tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 					Auxiliar.ImprimeHistograma(histograma);
-					tiempoPasado[2][i] = calcularTiempoNano ? System.nanoTime()
+					tiempoPasado[i][2] = calcularTiempoNano ? System.nanoTime()
 							: System.currentTimeMillis() - tiempoActual;
 				/*
 				 * break; case 'd':
@@ -69,19 +69,19 @@ public class Sesion1 {
 
 				for (int método = 0; método <= 1; método++) {/*leer.entero("Introduce el método deseado:\n0: BubbleSort.\n1: QuickSort.\n", 0, 1);*/
 
-				fotoSalida[i] = fotoEntrada[i].substring(0, fotoEntrada[i].length() - 4);
+				fotoSalida = fotoEntrada[i].substring(0, fotoEntrada[i].length() - 4);
 				switch (método) {
 				case 0:
-					fotoSalida[i] += "_b.png";
+					fotoSalida += "_b.png";
 					break;
 				case 1:
-					fotoSalida[i] += "_q.png";
+					fotoSalida += "_q.png";
 					break;
 				}
 
 				tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
-				Auxiliar.GenerarImagenOrdenandoColumnas(fotoEntrada[i], fotoSalida[i], método);
-				tiempoPasado[3+método][i] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
+				Auxiliar.GenerarImagenOrdenandoColumnas(fotoEntrada[i], fotoSalida, método);
+				tiempoPasado[i][3+método] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
 				}
 				/*
 				 * break; case 's': salir = true; break; default:
