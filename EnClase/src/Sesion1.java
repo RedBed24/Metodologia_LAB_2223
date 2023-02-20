@@ -1,3 +1,9 @@
+import java.io.IOException;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+
 import profes.Auxiliar;
 import profes.leer;
 
@@ -19,6 +25,8 @@ public class Sesion1 {
 
 				System.out.println("Processing " + fotoEntrada[i] + "...");
 
+				if (!fotoEntrada[i].endsWith(".png")) throw new IllegalArgumentException(fotoEntrada[i]);
+
 				System.out.println("Empezando apartado a");
 
 				fotoSalida = fotoEntrada[i].substring(0, fotoEntrada[i].length() - 4) + "_g.png";
@@ -26,6 +34,9 @@ public class Sesion1 {
 				tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 				Auxiliar.GenerarImagenGrises(fotoEntrada[i], fotoSalida);
 				tiempoPasado[i][0] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
+				
+				if (comprobarEscalaGrises(fotoSalida)) 
+					System.out.println("La imagen " + fotoSalida + " está en escala de grises.");
 
 				System.out.println("Empezando apartado b");
 
@@ -67,6 +78,27 @@ public class Sesion1 {
 		}
 
 		System.out.println("Ending program.");
+	}
 
-  }
+	public static boolean comprobarEscalaGrises(final String pathname) throws IOException {
+		boolean esGris = true;
+		
+		File Imagen = new File(pathname);
+		BufferedImage input = ImageIO.read(Imagen);          
+
+		int w = input.getWidth();
+		int h = input.getHeight();
+
+		for (int i = 0; i < w && esGris; i++) {
+			for (int j = 0; j < h && esGris; j++) {
+				int rgb = input.getRGB(i, j);
+				int r = (rgb >> 16) & 0xff;
+				int g = (rgb >> 8) & 0xff;
+				int b = (rgb) & 0xff;
+				if (r != g || g != b) esGris = false;
+			}
+		}
+		
+		return esGris;
+	}
 }
