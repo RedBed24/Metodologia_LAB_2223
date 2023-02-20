@@ -73,8 +73,12 @@ public class Sesion1 {
 			IO.generarCSV("datos.csv", tiempoPasado);
 
 			System.out.println("Finalización correcta");
+		} catch (IllegalArgumentException e) {
+			System.err.println("El nombre de la imagen no tiene el formato esperado: " + e.getMessage());
+		} catch (IOException e) {
+			System.err.println("Ha ocurrido un error de Entrada / Salida: " + e.getMessage());
 		} catch (Exception e) {
-			System.err.print("Error");
+			System.err.print("Error inesperado: " + e.getMessage());
 		}
 
 		System.out.println("Ending program.");
