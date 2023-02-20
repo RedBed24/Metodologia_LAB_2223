@@ -16,7 +16,7 @@ public class Sesion1 {
 
 		try {
 			for (int i = 0; i < fotoEntrada.length; i++) {
-				
+
 				System.out.println("Processing " + fotoEntrada[i] + "...");
 
 				System.out.println("Empezando apartado a");
@@ -25,24 +25,24 @@ public class Sesion1 {
 
 				tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 				Auxiliar.GenerarImagenGrises(fotoEntrada[i], fotoSalida);
-				tiempoPasado[0][i] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
+				tiempoPasado[i][0] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
 
 				System.out.println("Empezando apartado b");
 
 				tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 				histograma = Auxiliar.HistogramaImagen(fotoEntrada[i]);
-				tiempoPasado[1][i] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
+				tiempoPasado[i][1] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
 
 				System.out.println("Empezando apartado c");
 
 				tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 				Auxiliar.ImprimeHistograma(histograma);
-				tiempoPasado[2][i] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
+				tiempoPasado[i][2] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
 
 				System.out.println("Empezando apartado d");
 
 				for (int método = 0; método <= 1; método++) {
-					System.out.println("Usando método " + método + "en apartado d");
+					System.out.println("Usando método " + método + " en apartado d");
 
 					fotoSalida = fotoEntrada[i].substring(0, fotoEntrada[i].length() - 4);
 					switch (método) {
@@ -52,7 +52,7 @@ public class Sesion1 {
 
 					tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 					Auxiliar.GenerarImagenOrdenandoColumnas(fotoEntrada[i], fotoSalida, método);
-					tiempoPasado[3+método][i] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
+					tiempoPasado[i][3+método] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
 				}
 				
 				System.out.println("Se ha terminado de procesar la imagen " + fotoEntrada[i]);
