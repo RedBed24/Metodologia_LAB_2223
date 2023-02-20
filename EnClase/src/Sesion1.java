@@ -4,8 +4,16 @@ import profes.leer;
 public class Sesion1 {
 
 	public static void main(String[] args) {
+		long[] tiempoPasado = new long[4];
+		long tiempoActual;
+		int[] histograma = null;
+		boolean calcularTiempoNano = 's' == Character.toLowerCase(leer.caracter("¿Quieres calcular el tiempo en Nanosegundos? ['S', cualier otra resppuesta se medirá en milisegundos]:"));
+		boolean salir = false; 
+
+		do {
 		try {
-			/* Aparado a */
+		switch (Character.toLowerCase(leer.caracter("Elige un apartado: ['A', 'B', 'C', 'D', 'S'] (Selecionar 'S' sale del programa):"))) {
+		case 'a':
 			String fotoEntradaA = leer.cadena("Introduce el nombre de la foto del apartado A:");
 
 			if (!fotoEntradaA.endsWith(".png")) {
@@ -15,17 +23,29 @@ public class Sesion1 {
 
 			String fotoSalidaA = fotoEntradaA.substring(0, fotoEntradaA.length() - 4) + "_g.png";
 
+			tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 			Auxiliar.GenerarImagenGrises(fotoEntradaA, fotoSalidaA);
+			tiempoPasado[0] = System.nanoTime() - tiempoActual;
 			
-			/* Apartado b */
+			break;
+		case 'b':
+			
 			String ruta = leer.cadena("Escribe la ruta de la foto del apartado B: ");
-			int[] histograma = Auxiliar.HistogramaImagen(ruta);
+
+			histograma = Auxiliar.HistogramaImagen(ruta);
 			
-			/* Aparatado c */
+			break;
+		case 'c':
+			if (histograma == null) {
+				System.err.println("El histograma todavía no está inicializado, por favor, usa el apartado 'B' antes.");
+				throw new Exception();
+			}
+
 			System.out.println("El histograma de la imagen anterior es:");
 			Auxiliar.ImprimeHistograma(histograma);
 
-			/* Apartado d */
+			break;
+		case 'd':
 			String fotoEntradaD = leer.cadena("Introduce el nombre de la foto del apartado D:");
 
 			if (!fotoEntradaD.endsWith(".png")) {
@@ -42,12 +62,22 @@ public class Sesion1 {
 			}
 
 			Auxiliar.GenerarImagenOrdenandoColumnas(fotoEntradaD, fotoSalidaD, método);
-
-			System.out.println("Succesfully");
-		} catch (Exception e) {
-			System.err.print("Error,");
+			
+			break;
+		case 's':
+			salir = true;
+			break;
+		default:
+			System.err.println("El apartado no existe.");
+			throw new Exception();
 		}
-		System.out.println(" ending program.");
+		} catch (Exception e) {
+			System.err.print("Error");
+		}
+
+		} while (!salir);
+		System.out.println("Ending program.");
+
 	}
 
 }
