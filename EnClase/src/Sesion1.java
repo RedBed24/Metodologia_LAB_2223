@@ -25,14 +25,16 @@ public class Sesion1 {
 
 			tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 			Auxiliar.GenerarImagenGrises(fotoEntradaA, fotoSalidaA);
-			tiempoPasado[0] = System.nanoTime() - tiempoActual;
+			tiempoPasado[0] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
 			
 			break;
 		case 'b':
 			
 			String ruta = leer.cadena("Escribe la ruta de la foto del apartado B: ");
-
+			tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 			histograma = Auxiliar.HistogramaImagen(ruta);
+			tiempoPasado[1] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
+			
 			
 			break;
 		case 'c':
@@ -42,7 +44,9 @@ public class Sesion1 {
 			}
 
 			System.out.println("El histograma de la imagen anterior es:");
+			tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 			Auxiliar.ImprimeHistograma(histograma);
+			tiempoPasado[2] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
 
 			break;
 		case 'd':
@@ -61,7 +65,9 @@ public class Sesion1 {
 			case 1: fotoSalidaD += "_q.png"; break;
 			}
 
+			tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 			Auxiliar.GenerarImagenOrdenandoColumnas(fotoEntradaD, fotoSalidaD, método);
+			tiempoPasado[3] = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis() - tiempoActual;
 			
 			break;
 		case 's':
