@@ -124,7 +124,6 @@ public class Sesion1 {
 	 *
 	 * IOExcepcion: Clase base para las excepciones.
 	 *
-	 *
 	 *********************************************************************/
 	public static boolean comprobarEscalaGrises(final String pathname) throws IOException {
 		boolean esGris = true;
