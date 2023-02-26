@@ -7,29 +7,21 @@ import javax.imageio.ImageIO;
 import profes.Auxiliar;
 import profes.leer;
 
+/*********************************************************************
+*
+* Class Name: Complejidad
+* Author/s name: Samuel Espejo Gil, Noelia Díaz Alejo Alejo 
+* Release/Creation date:25/02/2023
+* Class version:
+* Class description: Invoca varios métodos (cuyo código se proporciona en Auxiliar.java) que manipulan las imágenes. Se divide en 4 apartados:
+* a. Tranforma una imagen a escala de grises, b. Calcula el histograma de una imagen, c. Imprime el histograma, d. Ordena las columnas de una imagen
+* de forma ascendente según el algoritmo de la burbuja o el algoritmo Quicksort.
+* Calcula la complejidad de cada apartado y foto. Por último, genera un csv los resultados.
+*
+**********************************************************************
+*/
 public class Sesion1 {
-	/*********************************************************************
-	 *
-	 * Method name:
-	 *
-	 * Name of the original author (if the module author is different than the
-	 * author of the file):
-	 *
-	 * Description of the Method: A description of what the method does.
-	 *
-	 * Calling arguments: A list of the calling arguments, their types, and brief
-	 * explanations of what they do.
-	 *
-	 * Return value: it type, and a brief explanation of what it does.
-	 *
-	 * Required Files: A list of required files needed by the method, indicating if
-	 * the method expects files to be already opened (only if files are used)
-	 *
-	 * List of Checked Exceptions and an indication of when each exception is
-	 * thrown.
-	 *
-	 *********************************************************************/
-
+	
 	public static void main(String[] args) {
 		String[] fotoEntrada = { "320x214.png", "640x360.png", "640x427.png", "1024x1024.png", "1536x1536.png", }; // Almacena las fotos
 		long[][] tiempoPasado = new long[5][fotoEntrada.length]; //Creación de la matriz tiempoPasado
@@ -96,7 +88,7 @@ public class Sesion1 {
 			}
 
 			System.out.println("Generando fichero datos.csv");
-			IO.generarCSV("datos.csv", tiempoPasado); //Generación del CSV con los tiempoPasado
+			IO.generarCSV("datos.csv", tiempoPasado); //Generación del CSV con los datos de tiempoPasado
 
 			System.out.println("Finalización correcta");
 		
@@ -111,28 +103,50 @@ public class Sesion1 {
 
 		System.out.println("Ending program.");
 	}
-
+	
+	/*********************************************************************
+	 *
+	 * Method name: comprobarEscalaGrises
+	 *
+	 * Name of the original author (if the module author is different than the
+	 * author of the file): Samuel Espejo Gil
+	 *
+	 * Description of the Method: Sirve para comprobar si una imagen se encuentra 
+	 * en escala de grises.
+	 *
+	 * Calling arguments: Parámetro pathname de tipo String, contiene la ruta de 
+	 * la imagen. Será empleado para crear el fichero que almacenará la imagen.
+	 *
+	 * Return value: Devuelve esGris de tipo boolean. Se inicializa a true, no
+	 * obstante, si la imagen no se encuentra en escala de grises, cambia a false.
+	 *
+	 * Required Files: Crea un fichero que almacena la imagen. 
+	 *
+	 * IOExcepcion: Clase base para las excepciones.
+	 *
+	 *
+	 *********************************************************************/
 	public static boolean comprobarEscalaGrises(final String pathname) throws IOException {
 		boolean esGris = true;
 		
-		File Imagen = new File(pathname);
-		BufferedImage input = ImageIO.read(Imagen);          
+		File Imagen = new File(pathname); //Creación de un fichero que almacena la imagen
+		BufferedImage input = ImageIO.read(Imagen); //Para leer la imagen       
 
-		int w = input.getWidth();
-		int h = input.getHeight();
+		int w = input.getWidth(); //Guarda la anchura en píxeles de la imagen
+		int h = input.getHeight();//Guarda la altura en píxeles de la imagen
 
 		for (int i = 0; i < w && esGris; i++) {
 			for (int j = 0; j < h && esGris; j++) {
-				int rgb = input.getRGB(i, j);
+				int rgb = input.getRGB(i, j); //Almacena un pixel del color predeterminado
 				int r = (rgb >> 16) & 0xff;
 				int g = (rgb >> 8) & 0xff;
 				int b = (rgb) & 0xff;
-				if (r != g || g != b) esGris = false;
+				if (r != g || g != b) esGris = false; //Si 'r' es distinto de 'g' o si 'g' es
+				//distinto de 'b', esGris cambia a false
 			}
 		}
 		
 		return esGris;
 	}
 
-	
 }
