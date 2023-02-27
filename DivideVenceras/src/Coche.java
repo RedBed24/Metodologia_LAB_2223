@@ -1,47 +1,54 @@
+import excepciones.CarCreationException;
 
+/**
+ * <p>
+ * Clase Entidad coche.
+ * Guarda información sobre estos.
+ * </p>
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @version 0.01
+ * @since 2023-02-27
+ */
 public class Coche {
-	private String modelo;
-	private TipoCombustible tipoCombustible;
-	private int numAsientos;
-	private TipoTansmisión tipoTransmision;
-	private double capacidad;
-	private double consumoMedio;
+	private final String modelo;
+	private final TipoCombustible tipoCombustible;
+	private final int numAsientos;
+	private final TipoTansmisión tipoTransmision;
+	/* Medido en L */
+	private final double capacidadMáxima;
+	/* Medido en L/100km */
+	private final double consumoMedio;
+	
+	/* Medido en L */
+	private double capacidadActual;
 	
 	public enum TipoCombustible { PETROL, DIESEL; };
 	public enum TipoTansmisión { AUTOMÁTICO, MANUAL; };
 	
-	public Coche(final String modelo, final Coche.TipoCombustible tipoCombustible, final int numAsientos, final Coche.TipoTansmisión tipoTransmision, final double capacidad, final double consumoMedio) {
+	public Coche(final String modelo, final Coche.TipoCombustible tipoCombustible, final int numAsientos, final Coche.TipoTansmisión tipoTransmision, final double capacidad, final double consumoMedio) throws CarCreationException {
 		super();
 		this.modelo = modelo;
 		this.tipoCombustible = tipoCombustible;
-		this.numAsientos = numAsientos;
+		if ((this.numAsientos = numAsientos) <= 0) throw new CarCreationException("El coche debe tener al menos un asiento.");
 		this.tipoTransmision = tipoTransmision;
-		this.capacidad = capacidad;
-		this.consumoMedio = consumoMedio;
+		if ((this.capacidadMáxima = capacidadMáxima) <= 0) throw new CarCreationException("La capacidad del coche debe ser superior a 0.");
+		if ((this.consumoMedio = consumoMedio) <= 0) throw new CarCreationException("El consumo medio del coche debe ser superior a 0.");
 	}
 
 	public String getModelo() { return modelo; }
 
-	public void setModelo(String modelo) { this.modelo = modelo; }
-
 	public TipoCombustible getTipoCombustible() { return tipoCombustible; }
-
-	public void setTipoCombustible(TipoCombustible tipoCombustible) { this.tipoCombustible = tipoCombustible; }
 
 	public int getNumAsientos() { return numAsientos; }
 
-	public void setNumAsientos(int numAsientos) { this.numAsientos = numAsientos; }
-
 	public TipoTansmisión getTipoTransmision() { return tipoTransmision; }
 
-	public void setTipoTransmision(TipoTansmisión tipoTransmision) { this.tipoTransmision = tipoTransmision; }
-
-	public double getCapacidad() { return capacidad; }
-
-	public void setCapacidad(double capacidad) { this.capacidad = capacidad; }
+	public double getCapacidadMáxima() { return capacidadMáxima; }
 
 	public double getConsumoMedio() { return consumoMedio; }
-
-	public void setConsumoMedio(double consumoMedio) { this.consumoMedio = consumoMedio; }
+	
+	public double getCapacidadActual() { return capacidadActual; }
+	
+	public void setCapacidadActual(final double litros) { capacidadActual = litros; }
 	
 }
