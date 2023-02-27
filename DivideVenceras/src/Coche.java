@@ -51,4 +51,27 @@ public class Coche {
 	
 	public void setCapacidadActual(final double litros) { capacidadActual = litros; }
 	
+	/**
+	 * <p>
+	 * Recorre la distancia especificada, actualizando el depósito
+	 * <p>
+	 * <p>
+	 * Es posible que se haya especificado más distancia a recorrer que la posible (indicada por la capacidad de fuel actual).
+	 * Por ello se devuelve cuánto se ha recorrido en realidad.
+	 * </p>
+	 * @param kilómetros Distancia en kilómetros que se desean recorrer
+	 * @return Distancia en kilómetos que se ha recorrido en realidad
+	 */
+	public double recorrer(final double kilómetros) {
+		/* calculamos los litros consumidos */
+		final double consumido = consumoMedio * kilómetros / 100;
+
+		/* calculamos lo recorrido en función de si tenemos suficiente fuel o no */
+		final double recorrido = consumido <= capacidadActual ? kilómetros : capacidadActual * 100 / consumoMedio;
+		
+		/* actualizamos el depósito */
+		capacidadActual = consumido <= capacidadActual ? capacidadActual - consumido : 0;
+		
+		return recorrido;
+	}
 }
