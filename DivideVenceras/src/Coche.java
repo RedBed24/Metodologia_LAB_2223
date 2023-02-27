@@ -25,7 +25,7 @@ public class Coche {
 	public enum TipoCombustible { PETROL, DIESEL; };
 	public enum TipoTansmisión { AUTOMÁTICO, MANUAL; };
 	
-	public Coche(final String modelo, final Coche.TipoCombustible tipoCombustible, final int numAsientos, final Coche.TipoTansmisión tipoTransmision, final double capacidad, final double consumoMedio) throws CarCreationException {
+	public Coche(final String modelo, final Coche.TipoCombustible tipoCombustible, final int numAsientos, final Coche.TipoTansmisión tipoTransmision, final double capacidadMáxima, final double consumoMedio) throws CarCreationException {
 		super();
 		this.modelo = modelo;
 		this.tipoCombustible = tipoCombustible;
