@@ -55,6 +55,8 @@ public class Coche {
 		this.tipoTransmision = tipoTransmision;
 		if ((this.capacidadMáxima = capacidadMáxima) <= 0) throw new CarCreationException("La capacidad del coche debe ser superior a 0.");
 		if ((this.consumoMedio = consumoMedio) <= 0) throw new CarCreationException("El consumo medio del coche debe ser superior a 0.");
+		
+		capacidadActual = capacidadMáxima;
 	}
 
 	public String getModelo() { return modelo; }
@@ -72,6 +74,8 @@ public class Coche {
 	public double getCapacidadActual() { return capacidadActual; }
 	
 	public void setCapacidadActual(final double litros) { capacidadActual = litros; }
+	
+	public double getCapacidadLibre() { return capacidadMáxima - capacidadActual; }
 	
 	/**
 	 * <p>
