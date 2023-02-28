@@ -22,8 +22,30 @@ public class Coche {
 	/* Medido en L */
 	private double capacidadActual;
 	
-	public enum TipoCombustible { PETROL, DIESEL; };
+	public enum TipoCombustible { PETROL, DIESEL, CNG; };
+	
+	public static TipoCombustible parseTipoCombustible(final String token) {
+		Coche.TipoCombustible comb;
+		switch (token.toLowerCase()) {
+			case "petrol": comb = Coche.TipoCombustible.PETROL; break;
+			case "diesel": comb = Coche.TipoCombustible.DIESEL; break;
+			case "cng":    comb = Coche.TipoCombustible.CNG;    break;
+			default: throw new IllegalArgumentException("Unexpected TipoCombustible value: " + token);
+		}
+		return comb;
+	}
+
 	public enum TipoTansmisión { AUTOMÁTICO, MANUAL; };
+	
+	public static TipoTansmisión parseTipoTransmisión(final String token) {
+		Coche.TipoTansmisión trans;
+		switch (token.toLowerCase()) {
+			case "automatic": trans = Coche.TipoTansmisión.AUTOMÁTICO; break;
+			case "manual":    trans = Coche.TipoTansmisión.MANUAL;     break;
+			default: throw new IllegalArgumentException("Unexpected TipoTransmisión value: " + token);
+		}
+		return trans;
+	}
 	
 	public Coche(final String modelo, final Coche.TipoCombustible tipoCombustible, final int numAsientos, final Coche.TipoTansmisión tipoTransmision, final double capacidadMáxima, final double consumoMedio) throws CarCreationException {
 		super();

@@ -30,9 +30,6 @@ public class IO {
 		final Scanner input = new Scanner(new File(pahtname));
 
 		StringTokenizer st;
-
-		/* Variable que contendrá el token cuando sea necesario */
-		String token;
 		
 		while (input.hasNextLine()) {
 			try {
@@ -40,34 +37,19 @@ public class IO {
 				st = new StringTokenizer(input.nextLine(), ",");;
 				
 				/* Token modelo */
-				String modelo = st.nextToken();
-				
-				/* Guardamos el token temporalmente */
-				token = st.nextToken();
+				final String modelo = st.nextToken();
 				
 				/* Intentamos obtener el tipo de combustible a partir del token */
-				Coche.TipoCombustible comb;
-				switch (token.toLowerCase()) {
-					case "petrol": comb = Coche.TipoCombustible.PETROL; break;
-					case "diesel": comb = Coche.TipoCombustible.DIESEL; break;
-					default: throw new IllegalArgumentException("Unexpected value: " + token);
-				}
+				final Coche.TipoCombustible comb = Coche.parseTipoCombustible(st.nextToken());
 				
 				/* Pasamos a entero porque en el fichero se encuentra como doble, pero no tiene sentido que este no sea entero */
-				int asientos = (int) Double.parseDouble(st.nextToken());
-				
-				token = st.nextToken();
+				final int asientos = (int) Double.parseDouble(st.nextToken());
 
-				Coche.TipoTansmisión trans;
-				switch (token.toLowerCase()) {
-					case "automatic": trans = Coche.TipoTansmisión.AUTOMÁTICO; break;
-					case "manual":    trans = Coche.TipoTansmisión.MANUAL;     break;
-					default: throw new IllegalArgumentException("Unexpected value: " + token);
-				}
+				final Coche.TipoTansmisión trans = Coche.parseTipoTransmisión(st.nextToken());
 				
-				double capacidad = Double.parseDouble(st.nextToken());
+				final double capacidad = Double.parseDouble(st.nextToken());
 
-				double consumoMedio = Double.parseDouble(st.nextToken());
+				final double consumoMedio = Double.parseDouble(st.nextToken());
 				
 				/* Creamos y añadimos el coche a la lista */
 				coches.add(new Coche(modelo, comb, asientos, trans, capacidad, consumoMedio));
