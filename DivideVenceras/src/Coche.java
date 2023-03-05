@@ -22,6 +22,8 @@ public class Coche {
 	/* Medido en L */
 	private double capacidadActual;
 	
+	/* Variable para saber si este coche ha podido recorrer todas las distancias, se presupone que sí */
+	private boolean haRecorridoTodo = true;
 	
 	/**
 	 * <p>
@@ -111,6 +113,10 @@ public class Coche {
 	
 	public double getCapacidadLibre() { return capacidadMáxima - capacidadActual; }
 	
+	public boolean isHaRecorridoTodo() { return haRecorridoTodo; }
+
+	public void setHaRecorridoTodo(boolean haRecorridoTodo) { this.haRecorridoTodo = haRecorridoTodo; }
+
 	/**
 	 * <p>
 	 * Recorre la distancia especificada, actualizando el depósito
