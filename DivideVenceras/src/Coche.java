@@ -22,26 +22,60 @@ public class Coche {
 	/* Medido en L */
 	private double capacidadActual;
 	
+	
+	/**
+	 * <p>
+	 * Dominio:
+	 * <ul>
+	 * <li>PETROL</li>
+	 * <li>DIESEL</li>
+	 * <li>CNG</li>
+	 * </ul>
+	 * </p>
+	 */
 	public enum TipoCombustible { PETROL, DIESEL, CNG; };
 	
+	/**
+	 * <p>
+	 * Método encargado de parsear un String con uno de los posibles tipos de combustibles y devolverlo como enum.
+	 * </p>
+	 * @param token String con el tipo de combustible que se quiere conseguir.
+	 * @return instancia del Enum con el combustible obtenido.
+	 */
 	public static TipoCombustible parseTipoCombustible(final String token) {
-		Coche.TipoCombustible comb;
+		TipoCombustible comb;
 		switch (token.toLowerCase()) {
-			case "petrol": comb = Coche.TipoCombustible.PETROL; break;
-			case "diesel": comb = Coche.TipoCombustible.DIESEL; break;
-			case "cng":    comb = Coche.TipoCombustible.CNG;    break;
+			case "petrol": comb = TipoCombustible.PETROL; break;
+			case "diesel": comb = TipoCombustible.DIESEL; break;
+			case "cng":    comb = TipoCombustible.CNG;    break;
 			default: throw new IllegalArgumentException("Unexpected TipoCombustible value: " + token);
 		}
 		return comb;
 	}
 
-	public enum TipoTansmisión { AUTOMÁTICO, MANUAL; };
+	/**
+	 * <p>
+	 * Dominio:
+	 * <ul>
+	 * <li>AUTOMATIC</li>
+	 * <li>MANUAL</li>
+	 * </ul>
+	 * </p>
+	 */
+	public enum TipoTansmisión { AUTOMATIC, MANUAL; };
 	
+	/**
+	 * <p>
+	 * Método encargado de parsear un String con uno de los posibles tipos de Transmisión y devolverlo como enum.
+	 * </p>
+	 * @param token String con el tipo de transmisión que se quiere conseguir.
+	 * @return instancia del Enum con el transmisión obtenido.
+	 */
 	public static TipoTansmisión parseTipoTransmisión(final String token) {
-		Coche.TipoTansmisión trans;
+		TipoTansmisión trans;
 		switch (token.toLowerCase()) {
-			case "automatic": trans = Coche.TipoTansmisión.AUTOMÁTICO; break;
-			case "manual":    trans = Coche.TipoTansmisión.MANUAL;     break;
+			case "automatic": trans = TipoTansmisión.AUTOMATIC; break;
+			case "manual":    trans = TipoTansmisión.MANUAL;     break;
 			default: throw new IllegalArgumentException("Unexpected TipoTransmisión value: " + token);
 		}
 		return trans;
