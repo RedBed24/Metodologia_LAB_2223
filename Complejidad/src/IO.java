@@ -2,33 +2,44 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/*********************************************************************
-*
-* Class Name: IO
-* Author/s name: Samuel Espejo Gil, Noelia Díaz Alejo Alejo 
-* Release/Creation date:25/02/2023
-* Class version:
-* Class description: Sirve para generar y escribir en el csv los 
-* tiempos de ejecución de cada uno de los métodos y fotos.
-*
-**********************************************************************
-*/
+/**
+ * @author Samuel Espejo Gil, Noelia Díaz Alejo Alejo 
+ * @since 25/02/2023
+ * @version 1
+ * <p>
+ * Sirve para manejar ficheros externos. Lectura y Escritura de ellos.
+ * </p>
+ */
 public class IO {
+	/**
+	 * <p>
+	 * Escribe todos datos de la matriz en un fichero csv siguiendo el mismo esquema que la matriz.
+	 * </p>
+	 * @param pathname Nombre del fichero a crear. En este se pondrán los datos.
+	 * @param datos Matriz de datos a escirbir en el fichero.
+	 * @throws IOException Si el archivo ya existe.
+	 */
 	public static void generarCSV(final String pathname, final long[][] datos) throws IOException {
-		File csv = new File(pathname); //Creación del fichero
+		/* Creación del fichero */
+		File csv = new File(pathname);
+
+		/* Si el fichero existe, salta la excepción */
 		if (!csv.createNewFile()) throw new IOException("File " + pathname + " already exist..."); 
-		//Si el fichero existe, salta la excepción
-		FileWriter salida = new FileWriter(csv); //Para escribir caracteres en el fichero 
+	
+		FileWriter salida = new FileWriter(csv);
 		
+		/* por cada dato */
 		for (long[] row : datos) {
 			for (long dato : row) {
-				salida.write(dato + ","); //Escribe cada dato separandolos por una coma
+				/* Escribe cada dato separandolos por una coma */
+				salida.write(dato + ",");
 			}
-			salida.write("\n"); //Cambiar de fila
+			/* Cambiar de fila */
+			salida.write("\n");
 		}
 		
-		salida.close(); //Cerrar el fichero
-		
+		/* Guardamos y cerramos el fichero */
+		salida.close();
 	}
 
 }
