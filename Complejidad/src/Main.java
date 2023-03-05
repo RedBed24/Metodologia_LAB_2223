@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 
-import profes.Auxiliar;
-import profes.leer;
+import campusvirtual.Auxiliar;
+import campusvirtual.leer;
 
 /*********************************************************************
 *
@@ -20,7 +20,7 @@ import profes.leer;
 *
 **********************************************************************
 */
-public class Sesion1 {
+public class Main {
 	
 	public static void main(String[] args) {
 		String[] fotoEntrada = { "320x214.png", "640x360.png", "640x427.png", "1024x1024.png", "1536x1536.png", }; // Almacena las fotos

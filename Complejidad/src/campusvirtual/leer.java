@@ -1,4 +1,4 @@
-package profes;
+package campusvirtual;
 /** Clase para poder leer del teclado cualquier dato de tipo Entero, Cadena, Carácter */
 
 import java.util.*;

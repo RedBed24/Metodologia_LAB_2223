@@ -1,4 +1,4 @@
-package profes;
+package campusvirtual;
 
 public class Ordenar {
 
