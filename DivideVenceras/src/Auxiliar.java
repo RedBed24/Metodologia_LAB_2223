@@ -45,5 +45,30 @@ public class Auxiliar {
 		/* El trozo por el que debemos a empezar a mirar es [0, longitud) */
 		return mínimoRec(vector, 0, vector.length - 1);
 	}
-
+	
+	private static double sum(final double[] A, int limInferior, int limSuperior) {
+		/* suponemos que no lo hemos encontrado */
+		double sum = 0;
+		
+		/* cuando sólo nos quede un elemento */
+		if (limInferior == limSuperior) {
+			sum = A[limInferior];
+		} else {
+			/* Dividimos por la mitad, b = 2 */
+			/* coste de división 1, k = 0 */
+			final int mid = (limInferior + limSuperior) / 2;
+			
+			/* hacemos dos llamadas, a = 2 */
+			double sumizq = sum(A, limInferior, mid);
+			double sumdrc = sum(A, mid + 1, limSuperior);
+			
+			sum = sumizq + sumdrc;
+		} 
+            
+		return sum;
+	} 
+	
+	public static double sum(final double[] A) {
+		return sum(A, 0, A.length - 1);
+	}
 }

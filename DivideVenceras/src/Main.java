@@ -46,31 +46,54 @@ public class Main {
 	 * @param distanciasPOIs Vector con las distancias en kilómetros entre los POIs
 	 */
 	public static void run(final Vector<Coche> coches, final double[] distanciasPOIs) {
-		/* TODO:
-		 * [ ] Hacer esto mediante divide y vencerás
-		 */
+		recorrer(coches, Auxiliar.sum(distanciasPOIs));
 
-		/* para cada coche */
-		for (final Coche coche : coches) {
-			/* para cada distancia */
-			for (final double distancia : distanciasPOIs)
-				/* Hacemos que el coche recorra la distancia */
-				/* si el coche ya no puede recorrer más, pasamos al siguiente */
-				if (distancia != coche.recorrer(distancia)) {
-					/* marcamos que no ha sido capaz de recorrer todo */
-					coche.setHaRecorridoTodo(false);
-					break;
-				}
-		}
-		
 		final Vector<Coche> cochesOrdenados = Ordenar.ordenarPorConsumo(coches);
 		
-		for (final Coche coche : cochesOrdenados) {
+		mostrar(cochesOrdenados);
+	}
+
+	public static void recorrer(final Vector<Coche> coches, final double distancia) {
+		recorrer(coches, 0, coches.size() - 1, distancia);
+	}
+	
+	private static void recorrer(final Vector<Coche> A, final int limInferior, final int limSuperior, final double distancia) {
+		/* cuando sólo nos quede un elemento */
+		if (limInferior == limSuperior) {
+			if (distancia != A.get(limInferior).recorrer(distancia))
+				A.get(limInferior).setHaRecorridoTodo(false);
+		} else {
+			/* Dividimos por la mitad, b = 2 */
+			/* coste de división 1, k = 0 */
+			final int mid = (limInferior + limSuperior) / 2;
+			
+			/* hacemos dos llamadas, a = 2 */
+			recorrer(A, limInferior, mid, distancia);
+			recorrer(A, mid + 1, limSuperior, distancia);
+		} 
+	} 
+
+	public static void mostrar(final Vector<Coche> coches) {
+		mostrar(coches, 0, coches.size() - 1);
+	}
+	
+	private static void mostrar(final Vector<Coche> A, final int limInferior, final int limSuperior) {
+		/* cuando sólo nos quede un elemento */
+		if (limInferior == limSuperior) {
+			final Coche coche = A.get(limInferior);
 			System.out.printf("\nEl coche %s ha consumido %.3fL.", coche, coche.getCapacidadLibre());
 			if (!coche.isHaRecorridoTodo())
 				System.out.print(" No ha sido capaz de llegar al final.");
-		}
-	}
+		} else {
+			/* Dividimos por la mitad, b = 2 */
+			/* coste de división 1, k = 0 */
+			final int mid = (limInferior + limSuperior) / 2;
+			
+			/* hacemos dos llamadas, a = 2 */
+			mostrar(A, limInferior, mid);
+			mostrar(A, mid + 1, limSuperior);
+		} 
+	} 
 
 	public static void main(String[] args) {
 		try {
