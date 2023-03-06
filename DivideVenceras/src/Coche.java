@@ -6,7 +6,7 @@ import excepciones.CarCreationException;
  * Guarda información sobre estos.
  * </p>
  * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
- * @version 0.01
+ * @version 1
  * @since 2023-02-27
  */
 public class Coche {
@@ -83,6 +83,19 @@ public class Coche {
 		return trans;
 	}
 	
+	/**
+	 * <p>
+	 * Crea un nuevo coche con los parametros especificados.
+	 * Rellena el tanque.
+	 * </p>
+	 * @param modelo
+	 * @param tipoCombustible
+	 * @param numAsientos
+	 * @param tipoTransmision
+	 * @param capacidadMáxima
+	 * @param consumoMedio
+	 * @throws CarCreationException
+	 */
 	public Coche(final String modelo, final Coche.TipoCombustible tipoCombustible, final int numAsientos, final Coche.TipoTansmisión tipoTransmision, final double capacidadMáxima, final double consumoMedio) throws CarCreationException {
 		super();
 		this.modelo = modelo;

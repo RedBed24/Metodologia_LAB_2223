@@ -4,7 +4,7 @@
  * Clase que se encarga de métodos generales de divide y vencerás.
  * </p>
  * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
- * @version 0.01
+ * @version 2
  * @since 2023-02-27
  */
 public class Auxiliar {

@@ -5,7 +5,7 @@ import java.util.Vector;
  * Se encarga de resolver los problemas del ejercicio mediante algoritmos de divide y vencerás.
  * </p>
  * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
- * @version 0.01
+ * @version 1
  * @since 2023-02-27
  */
 public class AlgoritmosDelProblema {

@@ -8,7 +8,7 @@ import campusvirtual.leer;
  * Clase que se encarga de la ejecución principal del programa.
  * </p>
  * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
- * @version 0.01
+ * @version 1
  * @since 2023-02-27
  */
 public class Main {

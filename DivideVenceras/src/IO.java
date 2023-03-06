@@ -12,7 +12,7 @@ import excepciones.CarCreationException;
  * Clase que se encarga de la salida y entrada en ficheros.
  * </p>
  * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
- * @version 0.01
+ * @version 2
  * @since 2023-02-27
  */
 public class IO {
