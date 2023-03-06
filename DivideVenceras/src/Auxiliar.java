@@ -1,4 +1,12 @@
 
+/**
+ * <p>
+ * Clase que se encarga de métodos generales de divide y vencerás.
+ * </p>
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @version 0.01
+ * @since 2023-02-27
+ */
 public class Auxiliar {
 	
 	/**
@@ -46,6 +54,15 @@ public class Auxiliar {
 		return mínimoRec(vector, 0, vector.length - 1);
 	}
 	
+	/**
+	 * <p>
+	 * Se encarga de sumar mediante Divide y Vencerás el array de doubles.
+	 * </p>
+	 * @param A array de doubles a sumar.
+	 * @param limInferior Índice inferior del que empezaremos a sumar.
+	 * @param limSuperior Índice superior que marcará el último a sumar.
+	 * @return La suma de sub-array delimitado por [limInferior, limSuperior]
+	 */
 	private static double sum(final double[] A, int limInferior, int limSuperior) {
 		/* suponemos que no lo hemos encontrado */
 		double sum = 0;
@@ -68,6 +85,13 @@ public class Auxiliar {
 		return sum;
 	} 
 	
+	/**
+	 * <p>
+	 * Primera llamada al algoritmo divide y vencerás para sumar todas las posiciones del array.
+	 * </p>
+	 * @param A array de doubles a sumar.
+	 * @return suma de todo el vector.
+	 */
 	public static double sum(final double[] A) {
 		return sum(A, 0, A.length - 1);
 	}

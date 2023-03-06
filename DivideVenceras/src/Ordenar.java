@@ -1,5 +1,13 @@
 import java.util.Vector;
 
+/**
+ * <p>
+ * Clase que se encarga de contener los algoritmos para ordenar los coches.
+ * </p>
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @version 0.01
+ * @since 2023-02-27
+ */
 public class Ordenar {
 
 	/**

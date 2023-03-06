@@ -3,6 +3,14 @@ import java.util.Vector;
 
 import campusvirtual.leer;
 
+/**
+ * <p>
+ * Clase que se encarga de la ejecución principal del programa.
+ * </p>
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @version 0.01
+ * @since 2023-02-27
+ */
 public class Main {
 
 	/**
@@ -46,62 +54,17 @@ public class Main {
 	 * @param distanciasPOIs Vector con las distancias en kilómetros entre los POIs
 	 */
 	public static void run(final Vector<Coche> coches, final double[] distanciasPOIs) {
-		recorrer(coches, Auxiliar.sum(distanciasPOIs));
-
-		final Vector<Coche> cochesOrdenados = Ordenar.ordenarPorConsumo(coches);
-		
-		mostrar(cochesOrdenados);
+		/* Hacemos que los coches recorran la suma de todas las distancias */
+		AlgoritmosDelProblema.recorrer(coches, Auxiliar.sum(distanciasPOIs));
+		/* Ahora mostramos el vector de coches ordenados por el consumo */
+		AlgoritmosDelProblema.mostrar(Ordenar.ordenarPorConsumo(coches));
 	}
-
-	public static void recorrer(final Vector<Coche> coches, final double distancia) {
-		recorrer(coches, 0, coches.size() - 1, distancia);
-	}
-	
-	private static void recorrer(final Vector<Coche> A, final int limInferior, final int limSuperior, final double distancia) {
-		/* cuando sólo nos quede un elemento */
-		if (limInferior == limSuperior) {
-			if (distancia != A.get(limInferior).recorrer(distancia))
-				A.get(limInferior).setHaRecorridoTodo(false);
-		} else {
-			/* Dividimos por la mitad, b = 2 */
-			/* coste de división 1, k = 0 */
-			final int mid = (limInferior + limSuperior) / 2;
-			
-			/* hacemos dos llamadas, a = 2 */
-			recorrer(A, limInferior, mid, distancia);
-			recorrer(A, mid + 1, limSuperior, distancia);
-		} 
-	} 
-
-	public static void mostrar(final Vector<Coche> coches) {
-		mostrar(coches, 0, coches.size() - 1);
-	}
-	
-	private static void mostrar(final Vector<Coche> A, final int limInferior, final int limSuperior) {
-		/* cuando sólo nos quede un elemento */
-		if (limInferior == limSuperior) {
-			final Coche coche = A.get(limInferior);
-			System.out.printf("\nEl coche %s ha consumido %.3fL.", coche, coche.getCapacidadLibre());
-			if (!coche.isHaRecorridoTodo())
-				System.out.print(" No ha sido capaz de llegar al final.");
-		} else {
-			/* Dividimos por la mitad, b = 2 */
-			/* coste de división 1, k = 0 */
-			final int mid = (limInferior + limSuperior) / 2;
-			
-			/* hacemos dos llamadas, a = 2 */
-			mostrar(A, limInferior, mid);
-			mostrar(A, mid + 1, limSuperior);
-		} 
-	} 
 
 	public static void main(String[] args) {
 		try {
 			final Vector<Coche> coches = new Vector<>();
 			
-			final double[] distanciasPOIs = obtenerDatos("cars_dataset.csv", coches);
-			
-			run(coches, distanciasPOIs);
+			run(coches, obtenerDatos("cars_dataset.csv", coches));
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero \"cars_dataset.csv\".");
