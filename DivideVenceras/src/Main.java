@@ -17,8 +17,12 @@ public class Main {
 	 * <p>
 	 * Método encargado de obtener los datos para la ejecución del programa.
 	 * </p>
+	 * <p>
+	 * El coste de este método es:
+	 * número de veces que el usuario introduzca mal el dato numérico + número indicado por el usuario + número de coches en el fichero. 
+	 * </p>
 	 * @param pathname Ruta y nombre al archivo de datos a leer.
-	 * @param coches Vector <i>ya creada</i> donde se añadirán los coches leídos.
+	 * @param coches Vector <i>ya creado</i> donde se añadirán los coches leídos.
 	 * @return Vector con las distancias entre los POIs.
 	 * @throws FileNotFoundException Cuando el fichero de datos a leer no se encuentra.
 	 */
@@ -45,53 +49,70 @@ public class Main {
 		
 		return distanciasPOIs;
 	}
-
+	
 	/**
 	 * <p>
-	 * Se encarga de realizar la primera llamada al algoritmo de Divide y Vencerás para recorrer todo el vector de coches.
-	 * Con cada coche hacemos que recorra las distancias y lo clasificamos en un vector dependiendo de si ha sido capaz de terminar el trayecto o no.
+	 * Método encargado de hacer la simulación principal:
+	 * Hacer que todos los coches intenten recorrer las distancias.
+	 * Clasifica cada coche dependiendo de si ha terminado o no.
+	 * Tras ello, ordena los que sí lo han conseguido y los devuelve.
 	 * </p>
-	 * @param coches Vector de Coches a recorrer.
-	 * @param distancias array de doubles que representan las distancias en kilómetros que debe recorrer cada coche.
-	 * @param cochesQueTerminan Vector de Coches donde añadiremos aquellos que sí son capaces de terminar el trayecto.
-	 * @param cochesQueNoTerminan Vector de Coches donde añadiremos aquellos que no son capaces de terminar el trayecto.
+	 * <p>
+	 * El coste de este método es:
+	 * número de coches * número de distancias + número de coches que terminan * log(número de coches que terminan).
+	 * Donde número de coches que terminan &lt;= número de coches.
+	 * <p>
+	 * @param coches Vector de Coches que contiene todos los coches sobre los que se realizará la simulación.
+	 * @param distanciasPOIs array de doubles que representan las distancias en km entre un POI y el siguiente.
+	 * @param cochesQueNoTerminan Vector de Coches <i>ya creado</i> donde se añadirán aquellos que no han terminado la ruta.
+	 * @return Vector de Coches ordenados respecto al consumo de aquellos que han sido capaz de terminar la ruta.
 	 */
-	public static void recorrer(final Vector<Coche> coches, final double[] distancias, final Vector<Coche> cochesQueTerminan, final Vector<Coche> cochesQueNoTerminan) {
-		recorrer(coches, 0, coches.size() - 1, distancias, cochesQueTerminan, cochesQueNoTerminan);
+	public static Vector<Coche> run(final Vector<Coche> coches, final double[] distanciasPOIs, final Vector<Coche> cochesQueNoTerminan) {
+		final Vector<Coche> cochesQueTerminan = new Vector<>();
+
+		/* Hacemos que los coches recorran la suma de todas las distancias */ 
+		/* coste número de coches * número de distancias */
+		for (Coche coche : coches) {
+			/* coste n, siendo n el número de distancias (la longitud del array) */
+			recorrer(distanciasPOIs, coche);
+			
+			/* si al coche le queda gasolina, ha conseguido terminar el recorrido */
+			if (coche.getCapacidadActual() >= 0)
+				cochesQueTerminan.add(coche);
+			else
+				cochesQueNoTerminan.add(coche);
+		}
+
+		/* ordenamos por consumo y devolvemos ese Vector */
+		/* coste n log n, siendo n el número de coches que terminan (la longitud del Vector) */
+		return Ordenar.ordenarPorConsumo(cochesQueTerminan);
 	}
 
 	/**
 	 * <p>
-	 * Se encarga de recorrer, mediante Divide y Vencerás, un sub-Vector de Coches delimitado por [limInferior, limSuperior].
-	 * Con cada coche hacemos que recorra las distancias y lo clasificamos en un vector dependiendo de si ha sido capaz de terminar el trayecto o no.
+	 * Método encargado de mostrar todos los resultados por la salida estandar.
 	 * </p>
-	 * @param coches Vector de Coches a recorrer.
-	 * @param limInferior
-	 * @param limSuperior
-	 * @param distancias array de doubles que representan las distancias en kilómetros que debe recorrer cada coche.
-	 * @param cochesQueTerminan Vector de Coches donde añadiremos aquellos que sí son capaces de terminar el trayecto.
-	 * @param cochesQueNoTerminan Vector de Coches donde añadiremos aquellos que no son capaces de terminar el trayecto.
+	 * <p>
+	 * El coste de este método es:
+	 * número de coches ordenados + numero de coches que no terminan
+	 * Es decir, número de coches totales.
+	 * </p>
+	 * @param cochesOrdenados
+	 * @param cochesQueNoTerminan
 	 */
-	private static void recorrer(final Vector<Coche> coches, int limInferior, int limSuperior, final double[] distancias, final Vector<Coche> cochesQueTerminan, final Vector<Coche> cochesQueNoTerminan) {
-		/* cuando sólo nos quede un elemento */
-		if (limInferior == limSuperior) {
-			final Coche coche = coches.get(limInferior);
-			/* hacemos que el coche intente recorrer las distancias */
-			recorrer(distancias, coche);
-			
-			/* dependiendo de si ha sido capaz de terminar o no, lo añadimos a un vector u otro */
-			if (coche.getCapacidadActual() >= 0) cochesQueTerminan.add(coche);
-			else cochesQueNoTerminan.add(coche);
-		} else {
-			/* Dividimos por la mitad, b = 2 */
-			/* coste de división 1, k = 0 */
-			final int mid = (limInferior + limSuperior) / 2;
-			
-			/* hacemos dos llamadas, a = 2 */
-			recorrer(coches, limInferior, mid, distancias, cochesQueTerminan, cochesQueNoTerminan);
-			recorrer(coches, mid + 1, limSuperior, distancias, cochesQueTerminan, cochesQueNoTerminan);
-		} 
-	} 
+	public static void mostarResultados(final Vector<Coche> cochesOrdenados, final Vector<Coche> cochesQueNoTerminan) {
+		System.out.printf("\n%-35s : Consumo\n", "Modelo");
+
+		System.out.println("Los coches que sí han llegado al final son, ordenados por consumo:");
+		for (Coche coche : cochesOrdenados)
+			System.out.println(coche);
+
+		System.out.println();
+
+		System.out.println("Los coches que no han conseguido llegar al final son:");
+		for (Coche coche : cochesQueNoTerminan)
+			System.out.println(coche);
+	}
 
 	/**
 	 * <p>
@@ -107,6 +128,17 @@ public class Main {
 	/**
 	 * <p>
 	 * Se encarga de hacer que el coche recorra cada distancia del array de doubles mediante Divide y Vencerás.
+	 * </p>
+	 * <h3>Estudio de complejidad:</h3>
+	 * <p>
+	 * Los cálculos se harán bajo la suposición de que <em>todas</em> las operaciones, excepto las llamadas a otras funciones estudiadas, tienen coste 1.
+	 * <ul>
+	 * <li>a = 2</li>
+	 * <li>b = 2</li>
+	 * <li>k = 0</li>
+	 * </ul>
+	 * a &gt; b<sup>k</sup> --&gt; T(n) pertenece O(n<sup>log<sub>b</sub> a</sup>) = O(n)
+	 * Donde n es el tamaño del array <code>distancias</code>.
 	 * </p>
 	 * @param distancias array de doubles que representan distancias en km a recorrer.
 	 * @param limInferior Índice inferior del que empezaremos a recorrer.
@@ -132,77 +164,20 @@ public class Main {
 		} 
 	} 
 	
-	/**
-	 * <p>
-	 * Muestra todos los coches del Vector, indicando cuánto han gastado y si han sido capaz de recorrer todo el trayecto.
-	 * </p>
-	 * <p>
-	 * El recorrido del vector se hace mediante un algoritmo Divide y Vencerás.
-	 * Esta función se encarga de hacer la primera llamada al algoritmo.
-	 * </p>
-	 * @param coches Vector de Coches que deberán recorrer la distancia dada.
-	 * @return String con toda la información recogida
-	 */
-	public static String mostrar(final Vector<Coche> coches) {
-		return mostrar(coches, 0, coches.size() - 1, "");
-	}
-	
-	/**
-	 * <p>
-	 * Se encarga de recorrer mediante Divide y Vencerás el vector de coches y mostrarlos.
-	 * </p>
-	 * @param vectorAMostrar Vector de Coches a mostrar.
-	 * @param limInferior Índice inferior del que empezaremos a mostrar.
-	 * @param limSuperior Índice superior que marcará el último a mostrar.
-	 * @return String con toda la información recogida
-	 */
-	private static String mostrar(final Vector<Coche> vectorAMostrar, final int limInferior, final int limSuperior, String devolver) {
-		/* cuando sólo nos quede un elemento */
-		if (limInferior == limSuperior) {
-			devolver += "\n" + vectorAMostrar.get(limInferior);
-		} else {
-			/* Dividimos por la mitad, b = 2 */
-			/* coste de división 1, k = 0 */
-			final int mid = (limInferior + limSuperior) / 2;
-			
-			/* hacemos dos llamadas, a = 2 */
-			devolver = mostrar(vectorAMostrar, limInferior, mid, devolver);
-			devolver = mostrar(vectorAMostrar, mid + 1, limSuperior, devolver);
-		} 
-		
-		return devolver;
-	} 
-
 	public static void main(String[] args) {
 		final String nombreDelFichero = "cars_dataset.csv";
 		try {
 			/* necesitamos que los vectores de coches puedan crecer ya que no sabemos a priori cuántos hay */
 			final Vector<Coche> coches = new Vector<>();
-			final Vector<Coche> cochesQueTerminan = new Vector<>();
 			final Vector<Coche> cochesQueNoTerminan = new Vector<>();
 
-			/* el número de distancias está definido una vez el usuario indica un número */
+			/* obtenermos las distancias y los coches */
 			final double[] distanciasPOIs = obtenerDatos(nombreDelFichero, coches);
 
-			/* Hacemos que los coches recorran la suma de todas las distancias */ 
-			recorrer(coches, distanciasPOIs, cochesQueTerminan, cochesQueNoTerminan);
-
-			System.out.printf("\n%-35s : Consumo\n", "Modelo");
-
-			if (cochesQueTerminan.size() > 0) {
-				System.out.println("Los coches que sí han llegado al final son, ordenados por consumo:");
-				System.out.println(mostrar(Ordenar.ordenarPorConsumo(cochesQueTerminan)));
-			} else
-				System.out.println("Ningún coche ha llegado al final.");
-
-			System.out.println();
-
-			if (cochesQueNoTerminan.size() > 0) {
-				System.out.println("Los coches que no han conseguido llegar al final son:");
-				System.out.println(mostrar(cochesQueNoTerminan));
-			} else
-				System.out.println("Todos los coches han llegado al final.");
+			/* Hacemos la simulación */
+			final Vector<Coche> cochesOrdenados = run(coches, distanciasPOIs, cochesQueNoTerminan);
 			
+			mostarResultados(cochesOrdenados, cochesQueNoTerminan);
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero \"" + nombreDelFichero + "\".");
 		} catch (Exception e) {
