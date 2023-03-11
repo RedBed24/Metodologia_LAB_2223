@@ -13,6 +13,13 @@ public class Ordenar {
 	/**
 	 * <p>
 	 * Combina ordenadamente dos Vectores de Coches <em>previamente ordenados</em>.
+	 * Un coche tiene prioridad cuando ha consumido menos.
+	 * Es decir: Si Consumo<sub>i</sub> &lt; Consumo<sub>j</sub> --&gt; i &lt; j
+	 * </p>
+	 * <h3>Estudio de complejidad:<h3>
+	 * <p>
+	 * Los cálculos se harán bajo la suposición de que <em>todas</em> las operaciones, excepto las llamadas a otras funciones estudiadas, tienen coste 1.
+	 * El coste de este es n + m, siendo n la longitud del primer vector y m la del segundo.
 	 * </p>
 	 * @param primerVector Vector de Coches <em>ordenado</em> que se unirá junto al otro.
 	 * @param segundoVector Vector de Coches <em>ordenado</em> que se unirá junto al otro.
@@ -35,27 +42,20 @@ public class Ordenar {
 			 * y avanzamos en ese vector
 			 */
 			if (c1.getCapacidadLibre() < c2.getCapacidadLibre()) {
-				/* sólo lo añadimos si ha sido capaz de recorrer todo */
-				//if (c1.isHaRecorridoTodo())
-					cochesOrdenados.add(c1);
+				cochesOrdenados.add(c1);
 				índice1++;
 			} else {
-				//if (c2.isHaRecorridoTodo())
-					cochesOrdenados.add(c2);
+				cochesOrdenados.add(c2);
 				índice2++;
 			}
 		}
 		
 		/* sólo uno de estos se ejecutará, se encargan de terminar de añadir el resto de coches al vector */
 		for (; índice1 < end1; índice1++)
-			/* el coche debe cumplir que ha recorrido todo */
-			//if (primerVector.get(índice1).isHaRecorridoTodo())
-				/* en ese caso, lo añadimos */
-				cochesOrdenados.add(primerVector.get(índice1)); 
+			cochesOrdenados.add(primerVector.get(índice1)); 
 
 		for (; índice2 < end2; índice2++)
-			//if (segundoVector.get(índice2).isHaRecorridoTodo())
-				cochesOrdenados.add(segundoVector.get(índice2)); 
+			cochesOrdenados.add(segundoVector.get(índice2)); 
 
 		return cochesOrdenados;
 	}
@@ -63,7 +63,17 @@ public class Ordenar {
 	/**
 	 * <p>
 	 * Ordena mediante el algoritmo MergeSort un sub-Vector de Coches del vector <code>coches</code> delimitado por los límites.
-	 * La ordenación se hace atendiendo a la ordenación que indica <code>combinar</code>.
+	 * La ordenación se hace atendiendo a la prioridad de coches que indica <code>combinar</code>.
+	 * </p>
+	 * <h3>Estudio de complejidad:</h3>
+	 * <p>
+	 * Los cálculos se harán bajo la suposición de que <em>todas</em> las operaciones, excepto las llamadas a otras funciones estudiadas, tienen coste 1.
+	 * <ul>
+	 * <li>a = 2</li>
+	 * <li>b = 2</li>
+	 * <li>k = 1</li>
+	 * </ul>
+	 * a = b<sup>k</sup> --&gt; T(n) pertenece O(n<sup>k</sup>log n) = O(nlog n)
 	 * </p>
 	 * @param coches Vector de Coches del que se obtendrán los coches a ordenar. Este no se ordenará.
 	 * @param limInferior Límite inferior que nos indica qué sub-Vector de <code>coches</code> debemos ordenar.
@@ -78,11 +88,16 @@ public class Ordenar {
 			cochesOrdenados = new Vector<>(1);
 			cochesOrdenados.add(coches.get(limInferior));
 		} else {
-			/* debemos ordenar cada mitad */
+			/* debemos ordenar cada mitad
+			 * División del problema: b = 2
+			 * Coste de división: 1 */
 			final int mitad = (limInferior + limSuperior) / 2;
+
+			/* Coste de combinación: n + m, donde m = n, por lo que el coste es 2n, y la complejidad es O(n) */
 
 			/* Devolvemos la combinación de */
 			cochesOrdenados = combinar(
+								/* Hacemos 2 llamadas recursivas, las cuales se ejecutan ambas: a = 2 */
 								/* la primera mitad ordenada */
 								mergeSort(coches, limInferior, mitad),
 								/* la segunda mitad ordenada */
@@ -90,6 +105,7 @@ public class Ordenar {
 								);
 		}
 		
+		/* g(n) pertenece a la complejidad O(n) -> k = 1 */
 		return cochesOrdenados;
 	}
 	
@@ -100,6 +116,9 @@ public class Ordenar {
 	 * <p>
 	 * La ordenación se hace mediante Merge Sort.
 	 * Este método se encarga de hacer la primera llamada al algoritmo.
+	 * </p>
+	 * <p>
+	 * La complejidad de este método es la misma que <code>mergeSort</code>.
 	 * </p>
 	 * @param coches Vector de Coches del que se obtendrán los coches a ordenar. Este no se ordenará.
 	 * @return Vector de Coches ordenados.
