@@ -93,7 +93,7 @@ public class Main {
 					tiempoActual = calcularTiempoNano ? System.nanoTime() : System.currentTimeMillis();
 					/* Ordena las columnas de la imagen de manera ascendente */
 					Auxiliar.GenerarImagenOrdenandoColumnas(fotoEntrada[i], fotoSalida, método);
-					tiempoPasado[i][3 + método] = calcularTiempoNano ? System.nanoTime(): System.currentTimeMillis() - tiempoActual; //Calcula y almacena el tiempo de ejecución del apartado d de la foto i
+					tiempoPasado[i][3 + método] = calcularTiempoNano ? System.nanoTime(): System.currentTimeMillis() - tiempoActual;
 				}
 
 				System.out.println("Se ha terminado de procesar la imagen " + fotoEntrada[i]);
