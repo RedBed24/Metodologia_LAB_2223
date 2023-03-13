@@ -45,12 +45,12 @@ public class IO {
 				final String modelo = st.nextToken();
 				
 				/* Intentamos obtener el tipo de combustible a partir del token */
-				final Coche.TipoCombustible comb = Coche.parseTipoCombustible(st.nextToken());
+				final TipoCombustible comb = TipoCombustible.parseTipoCombustible(st.nextToken());
 				
 				/* Pasamos a entero porque en el fichero se encuentra como doble, pero no tiene sentido que este no sea entero */
 				final int asientos = (int) Double.parseDouble(st.nextToken());
 
-				final Coche.TipoTansmisión trans = Coche.parseTipoTransmisión(st.nextToken());
+				final TipoTansmisión trans = TipoTransmisión.parseTipoTransmisión(st.nextToken());
 				
 				final double capacidad = Double.parseDouble(st.nextToken());
 
