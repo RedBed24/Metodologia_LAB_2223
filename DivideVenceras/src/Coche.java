@@ -35,7 +35,7 @@ public class Coche {
 	 * @param consumoMedio
 	 * @throws CarCreationException
 	 */
-	public Coche(final String modelo, final Coche.TipoCombustible tipoCombustible, final int numAsientos, final Coche.TipoTansmisión tipoTransmision, final double capacidadMáxima, final double consumoMedio) throws CarCreationException {
+	public Coche(final String modelo, final TipoCombustible tipoCombustible, final int numAsientos, final TipoTansmisión tipoTransmision, final double capacidadMáxima, final double consumoMedio) throws CarCreationException {
 		super();
 		this.modelo = modelo;
 		this.tipoCombustible = tipoCombustible;

@@ -50,7 +50,7 @@ public class IO {
 				/* Pasamos a entero porque en el fichero se encuentra como doble, pero no tiene sentido que este no sea entero */
 				final int asientos = (int) Double.parseDouble(st.nextToken());
 
-				final TipoTansmisión trans = TipoTransmisión.parseTipoTransmisión(st.nextToken());
+				final TipoTansmisión trans = TipoTansmisión.parseTipoTransmisión(st.nextToken());
 				
 				final double capacidad = Double.parseDouble(st.nextToken());
 
