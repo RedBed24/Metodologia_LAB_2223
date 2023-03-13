@@ -5,6 +5,9 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import Coche.Coche;
+import Coche.TipoCombustible;
+import Coche.TipoTansmisión;
 import excepciones.CarCreationException;
 
 /**

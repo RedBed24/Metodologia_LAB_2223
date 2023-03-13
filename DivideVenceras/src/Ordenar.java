@@ -1,5 +1,7 @@
 import java.util.Vector;
 
+import Coche.Coche;
+
 /**
  * <p>
  * Clase que se encarga de contener los algoritmos para ordenar los coches.

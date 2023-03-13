@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
 import java.util.Vector;
 
+import Coche.Coche;
 import campusvirtual.leer;
 
 /**
@@ -42,7 +43,7 @@ public class Main {
 		final double[] distanciasPOIs = new double[numPOIs - 1];
 		for (int i = 0; i < distanciasPOIs.length; i++)
 			/* Seleccionamos una distancia en km aleatoria entre [20, 60) entre dos POIs (i - 1, i) */
-			distanciasPOIs[i] = 20 + Math.random() * 40;
+			distanciasPOIs[i] = Constantes.DISTANCIAMÍNIMA + Math.random() * (Constantes.DISTANCIAMÁXIMA - Constantes.DISTANCIAMÍNIMA);
 		
 		/* leemos los coches */
 		IO.leerCoches(pathname, coches);
