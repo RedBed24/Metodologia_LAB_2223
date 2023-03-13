@@ -166,21 +166,20 @@ public class Main {
 	} 
 	
 	public static void main(String[] args) {
-		final String nombreDelFichero = "cars_dataset.csv";
 		try {
 			/* necesitamos que los vectores de coches puedan crecer ya que no sabemos a priori cuántos hay */
 			final Vector<Coche> coches = new Vector<>();
 			final Vector<Coche> cochesQueNoTerminan = new Vector<>();
 
 			/* obtenermos las distancias y los coches */
-			final double[] distanciasPOIs = obtenerDatos(nombreDelFichero, coches);
+			final double[] distanciasPOIs = obtenerDatos(Constantes.PATHNAMECOCHES, coches);
 
 			/* Hacemos la simulación */
 			final Vector<Coche> cochesOrdenados = run(coches, distanciasPOIs, cochesQueNoTerminan);
 			
 			mostarResultados(cochesOrdenados, cochesQueNoTerminan);
 		} catch (FileNotFoundException e) {
-			System.err.println("No se ha encontrado el fichero \"" + nombreDelFichero + "\".");
+			System.err.println("No se ha encontrado el fichero \"" + Constantes.PATHNAMECOCHES + "\".");
 		} catch (Exception e) {
 			System.err.println("Error inesperado: " + e);
 		}
