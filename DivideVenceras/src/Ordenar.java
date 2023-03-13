@@ -15,8 +15,6 @@ public class Ordenar {
 	/**
 	 * <p>
 	 * Combina ordenadamente dos Vectores de Coches <em>previamente ordenados</em>.
-	 * Un coche tiene prioridad cuando ha consumido menos.
-	 * Es decir: Si Consumo<sub>i</sub> &lt; Consumo<sub>j</sub> --&gt; i &lt; j
 	 * </p>
 	 * <h3>Estudio de complejidad:<h3>
 	 * <p>
@@ -43,7 +41,7 @@ public class Ordenar {
 			/* añadimos el coche con menor capacidad al vector ordenado
 			 * y avanzamos en ese vector
 			 */
-			if (c1.getCapacidadLibre() < c2.getCapacidadLibre()) {
+			if (c1.compareTo(c2) < 0) {
 				cochesOrdenados.add(c1);
 				índice1++;
 			} else {

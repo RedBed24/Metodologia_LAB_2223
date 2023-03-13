@@ -10,7 +10,7 @@ import excepciones.CarCreationException;
  * @version 1
  * @since 2023-02-27
  */
-public class Coche {
+public class Coche implements Comparable<Coche> {
 	private final String modelo;
 	private final TipoCombustible tipoCombustible;
 	private final int numAsientos;
@@ -79,5 +79,14 @@ public class Coche {
 
 	@Override
 	public String toString() { return String.format("%-35s : %6.3fL", modelo, getCapacidadLibre()); }
+
+	@Override
+	/**
+	 * Un coche tiene prioridad cuando ha consumido menos.
+	 * Es decir: Si Consumo<sub>i</sub> &lt; Consumo<sub>j</sub> --&gt; i &lt; j
+	 */
+	public int compareTo(Coche o) {
+		return getCapacidadLibre() == o.getCapacidadLibre() ? 0 : getCapacidadLibre() < o.getCapacidadLibre() ? -1 : 1;
+	}
 	
 }
