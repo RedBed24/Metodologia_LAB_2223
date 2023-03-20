@@ -41,7 +41,7 @@ public class IO {
 				/* Vamos obteniendo los tokens los cuales están separados por "," */
 				st = new StringTokenizer(input.nextLine(), ",");;
 				
-				/* Token modelo */
+				/* Token código */
 				final int código = Integer.parseInt(st.nextToken());
 				
 				final int espacio = Integer.parseInt(st.nextToken());
