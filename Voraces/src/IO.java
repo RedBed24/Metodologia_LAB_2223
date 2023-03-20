@@ -44,21 +44,15 @@ public class IO {
 				/* Token código */
 				final int código = Integer.parseInt(st.nextToken());
 				
-				final int espacio = Integer.parseInt(st.nextToken());
-				
 				/* Pasamos a entero porque en el fichero se encuentra como doble, pero no tiene sentido que este no sea entero */
 				final int comida = (int) Double.parseDouble(st.nextToken());
 
-				final int agua = (int) Double.parseDouble(st.nextToken());
-				
 				final double leche = Double.parseDouble(st.nextToken());
 				
-				vacas.add(new Vaca(código, espacio, comida, agua, leche));
+				vacas.add(new Vaca(código, comida, leche));
 
 			} catch (NumberFormatException e) {
 				System.err.println("Error trying to read number: " + e.getMessage());
-			} catch (IllegalArgumentException e) {
-				System.err.println("Error trying to read enum: " + e.getMessage());
 			} catch (NoSuchElementException e) {
 				System.err.println("Error trying to read next token.");
 			}
