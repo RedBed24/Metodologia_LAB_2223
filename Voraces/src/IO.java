@@ -36,10 +36,12 @@ public class IO {
 
 		StringTokenizer st;
 		
+		input.nextLine();
+		
 		while (input.hasNextLine()) {
 			try {
 				/* Vamos obteniendo los tokens los cuales están separados por "," */
-				st = new StringTokenizer(input.nextLine(), ",");;
+				st = new StringTokenizer(input.nextLine());
 				
 				/* Token código */
 				final int código = Integer.parseInt(st.nextToken());
