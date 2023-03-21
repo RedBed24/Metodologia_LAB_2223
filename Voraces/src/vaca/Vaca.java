@@ -1,4 +1,4 @@
-package Vaca;
+package vaca;
 
 public class Vaca implements Comparable<Vaca> {
 	
@@ -27,4 +27,8 @@ public class Vaca implements Comparable<Vaca> {
 		return getBeneficio() == o.getBeneficio() ? 0 : getBeneficio() > o.getBeneficio() ? -1 : 1;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("%6d %7d %10.3f %5.3f", código, consumoComida, producciónLeche, getBeneficio());
+	}
 }

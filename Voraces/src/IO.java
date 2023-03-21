@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import Vaca.Vaca;
+import vaca.Vaca;
 
 /**
  * <p>
