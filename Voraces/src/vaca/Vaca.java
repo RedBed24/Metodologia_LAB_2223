@@ -1,34 +1,30 @@
 package vaca;
 
-public class Vaca implements Comparable<Vaca> {
+public class Vaca {
 	
-	final private int código;
-	final private int consumoComida;
-	final private double producciónLeche;
+	final private int  código;
+	final private int  ocupaEspacio;      /* dm² */
+	final private int  consumoComida;     /* kg */
+	final private double producciónLeche; /* L */
 
-	public Vaca(final int código, final int consumoComida, final double producciónLeche) {
+	public Vaca(final int código, final int ocupaEspacio, final int consumoComida, final double producciónLeche) {
 		super();
 		this.código = código;
+		this.ocupaEspacio = ocupaEspacio;
 		this.consumoComida = consumoComida;
 		this.producciónLeche = producciónLeche;
 	}
 
 	public int getCódigo() { return código; }
 
+	public int getOcupaEspacio() { return ocupaEspacio; }
+
 	public int getConsumoComida() { return consumoComida; }
 
 	public double getProducciónLeche() { return producciónLeche; }
 	
-	public double getBeneficio() { return producciónLeche / consumoComida; };
-
-	@Override
-	public int compareTo(Vaca o) {
-		/* la vaca que de más beneficio va primero */
-		return getBeneficio() == o.getBeneficio() ? 0 : getBeneficio() > o.getBeneficio() ? -1 : 1;
-	}
-	
 	@Override
 	public String toString() {
-		return String.format("%6d %7d %10.3f %5.3f", código, consumoComida, producciónLeche, getBeneficio());
+		return String.format("%6d %7d %7d %10.3f", código, ocupaEspacio, consumoComida, producciónLeche);
 	}
 }
