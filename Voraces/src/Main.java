@@ -71,8 +71,8 @@ public class Main {
 			final int espacioDisponible = obtenerDatos(Constantes.PATHNAME_VACAS, vacas);
 
 			final Vector<Comparator<Vaca>> comparators = new Vector<>(2);
-				comparators.add(new vaca.ordenacion.RatioConsumoEspacio());
 				comparators.add(new vaca.ordenacion.RatioProducciónEspacio());
+				comparators.add(new vaca.ordenacion.CosteEspacioYComida());
 
 			Vector<Vaca> vacasSeleccionadas;
 			int espacioNoUsado;
@@ -82,6 +82,7 @@ public class Main {
 
 				espacioNoUsado = run(vacas, vacasSeleccionadas, espacioDisponible, comparador);
 
+				System.out.println("\nOrdenación por: " + comparador.getClass().toString().substring(22));
 				mostrarResultados(vacasSeleccionadas, espacioNoUsado);
 			}
 
