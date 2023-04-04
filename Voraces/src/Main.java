@@ -54,14 +54,16 @@ public class Main {
 	}
 
 	public static void mostrarResultados(final Vector<Vaca> vacasSeleccionadas, final int espacioNoUsado) {
-		System.out.println("\nCódigo Espacio Consumo Producción");
+		System.out.println("Código Espacio Consumo Producción");
 		System.out.println("           dm²      kg          L");
-		double suma = 0;
+		double sumaLeche = 0;
+		int sumaComida = 0;
 		for (Vaca vaca : vacasSeleccionadas) {
-			suma += vaca.getProducciónLeche();
+			sumaLeche += vaca.getProducciónLeche();
+			sumaComida += vaca.getConsumoComida();
 			System.out.println(vaca);
 		}
-		System.out.printf("El espacio restante es: %d, con una producción de leche: %.3f\n", espacioNoUsado, suma);
+		System.out.printf("Espacio restante: %ddm². Producción de leche: %.3fL. Consumo de comida: %dkg\n", espacioNoUsado, sumaLeche, sumaComida);
 	}
 
 	public static void main(String[] args) {
