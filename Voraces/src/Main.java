@@ -19,11 +19,11 @@ public class Main {
 		
 		return espacioDisponible;
 	}
-	
-	public static int run(final Vector<Vaca> vacas, final Vector<Vaca> vacasSeleccionadas, final int espacioDisponible, final Comparator<Vaca> comparador) {
-		int índiceVacaActual = 0;
-		int sumaEspacioGastado = 0;
 
+	public static int run(final Vector<Vaca> vacas, final Vector<Vaca> vacasSeleccionadas, int espacioDisponible, final Comparator<Vaca> comparador) {
+		int índiceVacaActual = 0;
+
+		/* quicksort requiere un array, no un vector */
 		final Vaca[] vacasOrdenadasPorBeneficio = new Vaca[vacas.size()];
 		for (int i = 0; i < vacas.size(); ++i) {
 			vacasOrdenadasPorBeneficio[i] = vacas.get(i);
@@ -33,28 +33,24 @@ public class Main {
 		
 		/*
 		 * Salidas:
-		 * ya hemos gastado la comida
+		 * ya hemos gastado el espacio
 		 * no quedan vacas, este será el peor caso
 		 */
 		while (
-				! (sumaEspacioGastado == espacioDisponible)              /* ! sea solución */
+				espacioDisponible > 0                                    /* ! sea solución */
 				&& índiceVacaActual < vacasOrdenadasPorBeneficio.length  /* nos queden vacas por seleccionar */
 		) {
-			Vaca vacaActual = vacasOrdenadasPorBeneficio[índiceVacaActual];
-			
+			Vaca vacaActual = vacasOrdenadasPorBeneficio[índiceVacaActual++];
+
 			/* vemos si la vaca es viable */
-			if (sumaEspacioGastado + vacaActual.getOcupaEspacio() <= espacioDisponible) {
+			if (espacioDisponible - vacaActual.getOcupaEspacio() >= 0) {
 				/* en ese caso la seleccionados */
 				vacasSeleccionadas.add(vacaActual);
-				sumaEspacioGastado  += vacaActual.getOcupaEspacio();
-			} else {
-				System.out.println(vacaActual);
+				espacioDisponible -= vacaActual.getOcupaEspacio();
 			}
-			
-			++índiceVacaActual;
 		}
-		
-		return espacioDisponible - sumaEspacioGastado;
+
+		return espacioDisponible;
 	}
 
 	public static void mostrarResultados(final Vector<Vaca> vacasSeleccionadas, final int espacioNoUsado) {
@@ -74,11 +70,20 @@ public class Main {
 
 			final int espacioDisponible = obtenerDatos(Constantes.PATHNAME_VACAS, vacas);
 
-			final Vector<Vaca> vacasSeleccionadas = new Vector<>(vacas.size()/2);
-			
-			final int espacioNoUsado = run(vacas, vacasSeleccionadas, espacioDisponible, new vaca.ordenacion.Produción());
-			
-			mostrarResultados(vacasSeleccionadas, espacioNoUsado);
+			final Vector<Comparator<Vaca>> comparators = new Vector<>(2);
+				comparators.add(new vaca.ordenacion.RatioConsumoEspacio());
+				comparators.add(new vaca.ordenacion.RatioProducciónEspacio());
+
+			Vector<Vaca> vacasSeleccionadas;
+			int espacioNoUsado;
+
+			for (final Comparator<Vaca> comparador : comparators) {
+				vacasSeleccionadas = new Vector<>(vacas.size()/2);
+
+				espacioNoUsado = run(vacas, vacasSeleccionadas, espacioDisponible, comparador);
+
+				mostrarResultados(vacasSeleccionadas, espacioNoUsado);
+			}
 
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero \"" + Constantes.PATHNAME_VACAS + "\".");
