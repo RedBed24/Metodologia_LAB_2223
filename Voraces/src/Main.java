@@ -44,7 +44,7 @@ public class Main {
 			Vaca vacaActual = vacasOrdenadasPorBeneficio[índiceVacaActual++];
 
 			/* vemos si la vaca es viable */
-			if (espacioDisponible - vacaActual.getOcupaEspacio() >= 0) {
+			if (espacioDisponible >= vacaActual.getOcupaEspacio() ) {
 				/* en ese caso la seleccionados */
 				vacasSeleccionadas.add(vacaActual);
 				espacioDisponible -= vacaActual.getOcupaEspacio();
