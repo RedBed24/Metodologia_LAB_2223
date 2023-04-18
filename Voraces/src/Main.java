@@ -16,8 +16,9 @@ public class Main {
 				System.err.println("No se puede tener tan poco espacio.");
 			}
 		} while (espacioDisponible <= 0);
-		
-		return espacioDisponible;
+
+		// convertimos a dm², que son las unidades en las que tarbajan las vacas
+		return espacioDisponible * 100;
 	}
 
 	public static int run(final Vector<Vaca> vacas, final Vector<Vaca> vacasSeleccionadas, int espacioDisponible, final Comparator<Vaca> comparador) {
