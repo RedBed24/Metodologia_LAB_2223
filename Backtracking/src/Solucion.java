@@ -1,6 +1,6 @@
 import vaca.Vaca;
 
-public class Solucion {
+public class Solucion implements Comparable<Solucion> {
 	private Vaca[] vacas;
 
 	private int consumoEspacio = 0;
