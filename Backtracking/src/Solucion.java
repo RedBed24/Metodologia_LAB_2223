@@ -1,5 +1,12 @@
 import vaca.Vaca;
 
+/**
+ * <p>
+ * Clase para representar una posible solución al problema.
+ * Contiene las vacas de la solución y las estadísticas de Espacio y Leche totales.
+ * </p>
+ * @author Samuel Espejo Gil, Noelia Díaz Alejo Alejo 
+ */
 public class Solucion implements Comparable<Solucion> {
 	private Vaca[] vacas;
 
@@ -12,6 +19,13 @@ public class Solucion implements Comparable<Solucion> {
 		this.vacas = new Vaca[size];
 	}
 	
+	/**
+	 * <p>
+	 * Crea una copia de la Solución.
+	 * <em>No se copian los objetos Vaca, se guardan como referencia.</em>
+	 * </p>
+	 * @param copia
+	 */
 	public Solucion(final Solucion copia) {
 		super();
 		this.vacas = new Vaca[copia.length()];
@@ -24,6 +38,13 @@ public class Solucion implements Comparable<Solucion> {
 		return vacas[posición];
 	}
 
+	/**
+	 * <p>
+	 * Añade una vaca a la solución con la posición indicada y actualiza las estadísticas de la solución.
+	 * </p>
+	 * @param nueva --> Vaca a añadir
+	 * @param posición --> Posición dentro del vector donde debemos colocar a la vaca
+	 */
 	public void añadirVaca(final Vaca nueva, final int posición) {
 		final Vaca anterior = vacas[posición];
 

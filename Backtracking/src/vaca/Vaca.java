@@ -1,5 +1,11 @@
 package vaca;
 
+/**
+ * <p>
+ * Clase dominio que representa a una Vaca
+ * </p>
+ * @author Samuel Espejo Gil, Noelia Díaz Alejo Alejo 
+ */
 public class Vaca {
 	
 	final private int  código;
