@@ -10,7 +10,12 @@ public class CosteEspacioYComida implements Comparator<Vaca> {
 	 * rango = [0, infinito)
 	 * 0 hace que no se tenga en cuenta la comida
 	 * un valor muy alto hace (prácticamente) que no se tenga en cuenta el espacio */
-	final static double RELACIÓN_COSTE_COMIDA_ESPACIO = 8.7;
+	private double RELACIÓN_COSTE_COMIDA_ESPACIO;
+	
+	public CosteEspacioYComida(final double RELACIÓN_COSTE_COMIDA_ESPACIO) {
+		super();
+		this.RELACIÓN_COSTE_COMIDA_ESPACIO = RELACIÓN_COSTE_COMIDA_ESPACIO;
+	}
 
 	@Override
 	public int compare(final Vaca o1, final Vaca o2) {

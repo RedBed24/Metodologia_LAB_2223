@@ -20,6 +20,16 @@ public class Main {
 		// convertimos a dm², que son las unidades en las que tarbajan las vacas
 		return espacioDisponible * 100;
 	}
+	
+	public static double calcularRatioPromedioEspacioComida(final Vector<Vaca> vacas) {
+		int espacio = 0;
+		int comida = 0;
+		for (Vaca vaca : vacas) {
+			espacio += vaca.getOcupaEspacio();
+			comida += vaca.getConsumoComida();
+		}
+		return espacio / (double) comida;
+	}
 
 	public static int run(final Vector<Vaca> vacas, final Vector<Vaca> vacasSeleccionadas, int espacioDisponible, final Comparator<Vaca> comparador) {
 		int índiceVacaActual = 0;
@@ -75,7 +85,7 @@ public class Main {
 
 			final Vector<Comparator<Vaca>> comparators = new Vector<>(2);
 				comparators.add(new vaca.ordenacion.RatioProducciónEspacio());
-				comparators.add(new vaca.ordenacion.CosteEspacioYComida());
+				comparators.add(new vaca.ordenacion.CosteEspacioYComida(calcularRatioPromedioEspacioComida(vacas)));
 
 			Vector<Vaca> vacasSeleccionadas;
 			int espacioNoUsado;
