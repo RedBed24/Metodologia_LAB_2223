@@ -40,6 +40,11 @@ public class Solucion {
 		}
 	}
 	
+	@Override
+	public int compareTo(final Solucion otra) {
+		return Double.compare(producciónLeche, otra.getProducciónLeche());
+	}
+	
 	public int getConsumoEspacio() { return consumoEspacio; }
 
 	public double getProducciónLeche() { return producciónLeche; }
