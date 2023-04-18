@@ -6,21 +6,6 @@ import vaca.Vaca;
 
 public class Main {
 	
-	public static int obtenerDatos(final String pathname, final Vector<Vaca> vacas) throws FileNotFoundException {
-		IO.leerVacas(pathname, vacas);
-		
-		int espacioDisponible;
-		do {
-			espacioDisponible = campusvirtual.leer.entero("¿Cuánto espacio (en metros cuadrados) dispone la granga?");
-			if (espacioDisponible <= 0) {
-				System.err.println("No se puede tener tan poco espacio.");
-			}
-		} while (espacioDisponible <= 0);
-
-		// convertimos a dm², que son las unidades en las que tarbajan las vacas
-		return espacioDisponible * 100;
-	}
-	
 	public static double calcularRatioPromedioEspacioComida(final Vector<Vaca> vacas) {
 		int espacio = 0;
 		int comida = 0;
@@ -78,10 +63,13 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		final String nombreFicheroDatos = lecturadatos.Constantes.PATHNAME_VACAS;
 		try {
 			final Vector<Vaca> vacas = new Vector<>(30);
 
-			final int espacioDisponible = obtenerDatos(Constantes.PATHNAME_VACAS, vacas);
+			lecturadatos.IO.leerVacas(nombreFicheroDatos, vacas);
+
+			final int espacioDisponible = lecturadatos.Usuario.obtenerEspacioDisponible();
 
 			final Vector<Comparator<Vaca>> comparators = new Vector<>(2);
 				comparators.add(new vaca.ordenacion.RatioProducciónEspacio());
@@ -100,7 +88,7 @@ public class Main {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.err.println("No se ha encontrado el fichero \"" + Constantes.PATHNAME_VACAS + "\".");
+			System.err.println("No se ha encontrado el fichero \"" + nombreFicheroDatos + "\".");
 		} catch (Exception e) {
 			System.err.println("Ha ocurrido un error inesperado. " + e);
 		}
