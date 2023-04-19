@@ -1,5 +1,5 @@
 import java.io.FileNotFoundException;
-import java.util.Vector;
+import java.util.NoSuchElementException;
 
 import vaca.Vaca;
 
@@ -124,9 +124,10 @@ public class Main {
 
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero \"" + nombreFicheroDatos + "\".");
+		} catch (NoSuchElementException e) {
+			System.err.println("El usuario ha dedicidido no introduir datos.");
 		} catch (Exception e) {
 			System.err.println("Ha ocurrido un error inesperado. " + e);
-			e.printStackTrace();
 		}
 	}
 
