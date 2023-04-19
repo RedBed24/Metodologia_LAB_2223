@@ -30,7 +30,7 @@ public class Fichero {
 	 * La complejidad es O(n), siendo n el número de líneas que hay en el fichero.
 	 * </p>
 	 * @param pahtname El camino y nombre al fichero a leer
-	 * @param vacas Lista <b>ya creada</b> que contendrá las Vacas que se leerán del fichero
+	 * @return array de Vacas leídas
 	 * @throws FileNotFoundException En caso de no encontrar el fichero con el pathname dado
 	 */
 	public static Vaca[] leerVacas(final String pahtname) throws FileNotFoundException {
@@ -66,11 +66,6 @@ public class Fichero {
 		
 		input.close();
 		
-		Vaca vacas[] = new Vaca[colaVacas.size()];
-		for (int i = 0; i < vacas.length; i++) {
-			vacas[i] = colaVacas.poll();
-		}
-		
-		return vacas;
+		return colaVacas.toArray(new Vaca[colaVacas.size()]);
 	}
 }
