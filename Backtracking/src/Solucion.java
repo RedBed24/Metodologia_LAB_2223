@@ -74,12 +74,12 @@ public class Solucion implements Comparable<Solucion> {
 	
 	@Override
 	public String toString() {
-		String str = "[Solución: Vacas (id): {";
+		String str = "[Solución: Vacas: {";
 		boolean primera = true;
 		
 		for (Vaca vaca : vacas) {
 			if (vaca != null) {
-				str += (primera ? "" : ", ") + vaca.getCódigo();
+				str += (primera ? "" : ", ") + vaca;
 				primera = false;
 			}
 		}

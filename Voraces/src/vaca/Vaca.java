@@ -15,8 +15,6 @@ public class Vaca {
 		this.producciónLeche = producciónLeche;
 	}
 
-	public int getCódigo() { return código; }
-
 	public int getOcupaEspacio() { return ocupaEspacio; }
 
 	public int getConsumoComida() { return consumoComida; }
@@ -25,6 +23,6 @@ public class Vaca {
 	
 	@Override
 	public String toString() {
-		return String.format("%6d %7d %7d %10.3f", código, ocupaEspacio, consumoComida, producciónLeche);
+		return String.format("%d", código);
 	}
 }
