@@ -41,14 +41,12 @@ public class Main {
 			final Solucion solucion,
 			final Registro posiblesSoluciones
 	) {
-		// si es una posible solución
-		if (lecheDeseada <= 0) {
-			posiblesSoluciones.contemplarSolución(solucion);
-		}
-		
-		// si no quedan más vacas disponibles
+		// si no quedan más vacas sobre las que dedicir, hemos decidido por todas
 		if (etapa == vacasDisponibles.length) {
-			// no avanzamos
+			// si es una posible solución
+			if (lecheDeseada <= 0) {
+				posiblesSoluciones.contemplarSolución(solucion);
+			}
 
 		// si quedan vacas disponibles
 		} else {
