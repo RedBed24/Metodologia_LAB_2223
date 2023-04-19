@@ -13,17 +13,18 @@ public class Registro {
 
 	/**
 	 * <p>
-	 * Guarda primera solución, la mejor y cuenta todas las que le pasemos.
+	 * Guarda <emp>una copia</em> de la primera solución, la mejor y cuenta todas las que le pasemos.
 	 * </p>
 	 * @param nueva --> Una nueva solución a contemplar
 	 */
 	public void contemplarSolución(final Solucion nueva) {
 		if (primera == null) {
-			primera = nueva;
-			mejor = nueva;
+			// creamos una copia
+			primera = new Solucion(nueva);
+			mejor = new Solucion(nueva);
 		}
 		if (mejor.compareTo(nueva) < 0) {
-			mejor = nueva;
+			mejor = new Solucion(nueva);
 		}
 		
 		cuentaSoluciones++;

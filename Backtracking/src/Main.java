@@ -15,8 +15,7 @@ public class Main {
 	) {
 		// si es una posible solución
 		if (lecheDeseada <= 0) {
-			// guardamos una copia
-			posiblesSoluciones.contemplarSolución(new Solucion(solucion));
+			posiblesSoluciones.contemplarSolución(solucion);
 		}
 		
 		// si no quedan más vacas disponibles
