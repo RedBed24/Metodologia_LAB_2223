@@ -4,8 +4,36 @@ import java.util.Vector;
 import vaca.Vaca;
 
 public class Main {
+	
+	/**
+	 * <p>
+	 * Abstrae la primera llamada al algoritmo.
+	 * </p>
+	 * @param vacasDisponibles
+	 * @param lecheDeseada
+	 * @param límiteEspacio
+	 * @param registro
+	 */
+	public static void run(
+			final Vaca vacasDisponibles[],
+			final double lecheDeseada,
+			final int límiteEspacio,
+			final Registro registro
+	) {
+		run(
+				vacasDisponibles,
+				lecheDeseada,
+				límiteEspacio,
+				// etapa
+				0,
+				// solución temporal para ir explorando
+				new Solucion(vacasDisponibles.length),
+				// contenedor de soluciones
+				registro
+		);
+	}
 
-	public static void run (
+	public static void run(
 			final Vaca vacasDisponibles[],
 			final double lecheDeseada,
 			final int límiteEspacio,
@@ -87,10 +115,6 @@ public class Main {
 					vacasOrdenadas,
 					lecturadatos.Usuario.obtenerLecheDeseada(),
 					lecturadatos.Constantes.ESPACIO_DISPONIBLE,
-					// etapa
-					0,
-					// solución temporal para ir explorando
-					new Solucion(vacas.size()),
 					// contenedor de soluciones
 					registro
 			);
