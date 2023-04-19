@@ -100,7 +100,6 @@ public class Main {
 					registro
 			);
 		
-			// la primera solución no es 1, 2, 3... porque las habíamos ordenado por consumo de espacio
 			System.out.println(registro);
 
 		} catch (FileNotFoundException e) {
