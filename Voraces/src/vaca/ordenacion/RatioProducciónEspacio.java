@@ -12,5 +12,10 @@ public class RatioProducciónEspacio implements Comparator<Vaca>{
 		final double ratio2 = o2.getProducciónLeche() / o2.getOcupaEspacio();
 		return - Double.compare(ratio1, ratio2);
 	}
+	
+	@Override
+	public String toString() {
+		return "Mayor ratio: Producción / Espacio";
+	}
 
 }

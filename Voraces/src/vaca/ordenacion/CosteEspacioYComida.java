@@ -23,6 +23,11 @@ public class CosteEspacioYComida implements Comparator<Vaca> {
 		final double precio2 = o2.getOcupaEspacio() + o2.getConsumoComida() * RELACIÓN_COSTE_COMIDA_ESPACIO;
 		return Double.compare(precio1, precio2);
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Menor coste en: Espacio + %.3f x Comida", RELACIÓN_COSTE_COMIDA_ESPACIO);
+	}
 
 }
 
