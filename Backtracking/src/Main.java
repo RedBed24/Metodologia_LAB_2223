@@ -68,45 +68,35 @@ public class Main {
 						solucion,
 						posiblesSoluciones
 				);
-
-				// exploramos la solución de no añadir la vaca
-				solucion.añadirVaca(null, etapa);
-
-				run(
-						vacasDisponibles,
-						lecheDeseada,
-						límiteEspacio,
-						// sólo avanzamos la etapa
-						etapa + 1,
-						solucion,
-						posiblesSoluciones
-				);
 			}
-			// si no es viable ya no hay más posibilidades ya que están ordenadas por espacio,
-			// es decir, la siguiente ocupa lo mismo o más, por lo que tampoco va a entrar
+
+			// exploramos la solución de no añadir la vaca
+			solucion.añadirVaca(null, etapa);
+
+			run(
+					vacasDisponibles,
+					lecheDeseada,
+					límiteEspacio,
+					// sólo avanzamos la etapa
+					etapa + 1,
+					solucion,
+					posiblesSoluciones
+			);
 		}
 	}
 	
 	public static void main (String[] args) {
 		final String nombreFicheroDatos = lecturadatos.Constantes.PATHNAME_VACAS;
 		try {
-			final Vaca vacasOrdenadas[] = lecturadatos.Fichero.leerVacas(nombreFicheroDatos);
+			final Vaca vacas[] = lecturadatos.Fichero.leerVacas(nombreFicheroDatos);
 			
-			// ordenamos por consumo de espacio
-			campusvirtual.Ordenar.quickSortC(
-					vacasOrdenadas,
-					(Vaca o1, Vaca o2) -> {
-						return Integer.compare(o1.getOcupaEspacio(), o2.getOcupaEspacio());
-					}
-			);
-			
+			// contenedor de soluciones
 			final Registro registro = new Registro();
 
 			run(
-					vacasOrdenadas,
+					vacas,
 					lecturadatos.Usuario.obtenerLecheDeseada(),
 					lecturadatos.Constantes.ESPACIO_DISPONIBLE,
-					// contenedor de soluciones
 					registro
 			);
 		
