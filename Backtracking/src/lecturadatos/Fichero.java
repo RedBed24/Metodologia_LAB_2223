@@ -1,10 +1,12 @@
 package lecturadatos;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 import vaca.Vaca;
 
@@ -31,7 +33,8 @@ public class Fichero {
 	 * @param vacas Lista <b>ya creada</b> que contendrá las Vacas que se leerán del fichero
 	 * @throws FileNotFoundException En caso de no encontrar el fichero con el pathname dado
 	 */
-	public static void leerVacas(final String pahtname, final Vector <Vaca> vacas) throws FileNotFoundException {
+	public static Vaca[] leerVacas(final String pahtname) throws FileNotFoundException {
+		final Queue<Vaca> colaVacas = new LinkedList<Vaca>();
 		/* Declaración del scanner a usar para leer las líneas */
 		final Scanner input = new Scanner(new File(pahtname));
 
@@ -52,7 +55,7 @@ public class Fichero {
 
 				final double leche = Double.parseDouble(st.nextToken());
 				
-				vacas.add(new Vaca(código, espacio, comida, leche));
+				colaVacas.add(new Vaca(código, espacio, comida, leche));
 
 			} catch (NumberFormatException e) {
 				System.err.println("Error trying to read number: " + e.getMessage());
@@ -62,5 +65,12 @@ public class Fichero {
 		}
 		
 		input.close();
+		
+		Vaca vacas[] = new Vaca[colaVacas.size()];
+		for (int i = 0; i < vacas.length; i++) {
+			vacas[i] = colaVacas.poll();
+		}
+		
+		return vacas;
 	}
 }

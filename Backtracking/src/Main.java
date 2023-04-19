@@ -90,14 +90,7 @@ public class Main {
 	public static void main (String[] args) {
 		final String nombreFicheroDatos = lecturadatos.Constantes.PATHNAME_VACAS;
 		try {
-			final Vector<Vaca> vacas = new Vector<>(30);
-
-			lecturadatos.Fichero.leerVacas(nombreFicheroDatos, vacas);
-
-			final Vaca vacasOrdenadas[] = new Vaca[vacas.size()];
-			for (int i = 0; i < vacas.size(); i++) {
-				vacasOrdenadas[i] = vacas.get(i);
-			}
+			final Vaca vacasOrdenadas[] = lecturadatos.Fichero.leerVacas(nombreFicheroDatos);
 			
 			// ordenamos por consumo de espacio
 			campusvirtual.Ordenar.quickSortC(
