@@ -1,12 +1,13 @@
 import java.io.FileNotFoundException;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import vaca.Vaca;
 
 public class Main {
 	
-	public static double calcularRatioPromedioEspacioComida(final Vector<Vaca> vacas) {
+	public static double calcularRatioPromedioEspacioComida(final Vaca vacas[]) {
 		int espacio = 0;
 		int comida = 0;
 		for (Vaca vaca : vacas) {
@@ -16,58 +17,34 @@ public class Main {
 		return espacio / (double) comida;
 	}
 
-	public static int run(final Vector<Vaca> vacas, final Vector<Vaca> vacasSeleccionadas, int espacioDisponible, final Comparator<Vaca> comparador) {
+	public static Solucion run(final Vaca vacas[], int espacioDisponible) {
+		final Solucion vacasSeleccionadas = new Solucion(vacas.length);
 		int índiceVacaActual = 0;
 
-		/* quicksort requiere un array, no un vector */
-		final Vaca[] vacasOrdenadasPorBeneficio = new Vaca[vacas.size()];
-		for (int i = 0; i < vacas.size(); ++i) {
-			vacasOrdenadasPorBeneficio[i] = vacas.get(i);
-		}
-
-		campusvirtual.Ordenar.quickSortC(vacasOrdenadasPorBeneficio, comparador);
-		
 		/*
 		 * Salidas:
 		 * ya hemos gastado el espacio
 		 * no quedan vacas, este será el peor caso
 		 */
-		while (
-				espacioDisponible > 0                                    /* ! sea solución */
-				&& índiceVacaActual < vacasOrdenadasPorBeneficio.length  /* nos queden vacas por seleccionar */
-		) {
-			Vaca vacaActual = vacasOrdenadasPorBeneficio[índiceVacaActual++];
+		while (espacioDisponible > 0 && índiceVacaActual < vacas.length) {
+			Vaca vacaActual = vacas[índiceVacaActual];
 
 			/* vemos si la vaca es viable */
 			if (espacioDisponible >= vacaActual.getOcupaEspacio() ) {
 				/* en ese caso la seleccionados */
-				vacasSeleccionadas.add(vacaActual);
+				vacasSeleccionadas.añadirVaca(vacaActual, índiceVacaActual);
 				espacioDisponible -= vacaActual.getOcupaEspacio();
 			}
+			índiceVacaActual++;
 		}
 
-		return espacioDisponible;
-	}
-
-	public static void mostrarResultados(final Vector<Vaca> vacasSeleccionadas, final int espacioNoUsado) {
-		System.out.println("Código Espacio Consumo Producción");
-		System.out.println("           dm²      kg          L");
-		double sumaLeche = 0;
-		int sumaComida = 0;
-		for (Vaca vaca : vacasSeleccionadas) {
-			sumaLeche += vaca.getProducciónLeche();
-			sumaComida += vaca.getConsumoComida();
-			System.out.println(vaca);
-		}
-		System.out.printf("Espacio restante: %ddm². Producción de leche: %.3fL. Consumo de comida: %dkg\n", espacioNoUsado, sumaLeche, sumaComida);
+		return vacasSeleccionadas;
 	}
 
 	public static void main(String[] args) {
 		final String nombreFicheroDatos = lecturadatos.Constantes.PATHNAME_VACAS;
 		try {
-			final Vector<Vaca> vacas = new Vector<>(30);
-
-			lecturadatos.IO.leerVacas(nombreFicheroDatos, vacas);
+			final Vaca vacas[] = lecturadatos.Fichero.leerVacas(nombreFicheroDatos);
 
 			final int espacioDisponible = lecturadatos.Usuario.obtenerEspacioDisponible();
 
@@ -75,20 +52,22 @@ public class Main {
 				comparators.add(new vaca.ordenacion.RatioProducciónEspacio());
 				comparators.add(new vaca.ordenacion.CosteEspacioYComida(calcularRatioPromedioEspacioComida(vacas)));
 
-			Vector<Vaca> vacasSeleccionadas;
-			int espacioNoUsado;
+			Solucion vacasSeleccionadas;
 
 			for (final Comparator<Vaca> comparador : comparators) {
-				vacasSeleccionadas = new Vector<>(vacas.size()/2);
 
-				espacioNoUsado = run(vacas, vacasSeleccionadas, espacioDisponible, comparador);
+				campusvirtual.Ordenar.quickSortC(vacas, comparador);
 
-				System.out.println("\nOrdenación por: " + comparador.getClass().toString().substring(22));
-				mostrarResultados(vacasSeleccionadas, espacioNoUsado);
+				vacasSeleccionadas = run(vacas, espacioDisponible);
+
+				System.out.println("\nOrdenación por: " + comparador);
+				System.out.println(vacasSeleccionadas);
 			}
 
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero \"" + nombreFicheroDatos + "\".");
+		} catch (NoSuchElementException e) {
+			System.err.println("El usuario ha dedicidido no introduir datos.");
 		} catch (Exception e) {
 			System.err.println("Ha ocurrido un error inesperado. " + e);
 		}
