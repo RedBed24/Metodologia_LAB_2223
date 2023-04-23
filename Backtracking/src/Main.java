@@ -139,11 +139,15 @@ public class Main {
 
 			final Solucion primera = runA(vacas, lecheDeseada, espacioDisponible);
 
-			System.out.printf("La primera solución encontrada es: %s.\n", primera);
+			if (primera.getProducciónLeche() >= lecheDeseada) {
+				System.out.printf("La primera solución encontrada es: %s.\n", primera);
 
-			final Registro registro = run(vacas, lecheDeseada, espacioDisponible);
+				final Registro registro = run(vacas, lecheDeseada, espacioDisponible);
 
-			System.out.println(registro);
+				System.out.println(registro);
+			} else {
+				System.out.println("No se ha encontrado una solución.\nEl límite de espacio es muy pequeño y la producción de leche desesada es muy grande.");
+			}
 
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero \"" + nombreFicheroDatos + "\".");
