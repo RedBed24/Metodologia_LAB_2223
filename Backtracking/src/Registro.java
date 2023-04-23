@@ -7,7 +7,6 @@
  *
  */
 public class Registro {
-	private Solucion primera;
 	private Solucion mejor;
 	private int cuentaSoluciones = 0;
 
@@ -18,12 +17,10 @@ public class Registro {
 	 * @param nueva --> Una nueva solución a contemplar
 	 */
 	public void contemplarSolución(final Solucion nueva) {
-		if (primera == null) {
+		if (mejor == null) {
 			// creamos una copia
-			primera = new Solucion(nueva);
 			mejor = new Solucion(nueva);
-		}
-		if (mejor.compareTo(nueva) < 0) {
+		} else if (mejor.compareTo(nueva) < 0) {
 			mejor = new Solucion(nueva);
 		}
 		
@@ -32,6 +29,6 @@ public class Registro {
 	
 	@Override
 	public String toString() {
-		return String.format("Primera: %s\nMejor: %s\nTotal: %d", primera, mejor, cuentaSoluciones);
+		return String.format("Mejor: %s\nTotal: %d", mejor, cuentaSoluciones);
 	}
 }

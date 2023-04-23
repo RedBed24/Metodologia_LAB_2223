@@ -70,28 +70,15 @@ public class Main {
 	 * @param vacasDisponibles
 	 * @param lecheDeseada
 	 * @param límiteEspacio
-	 * @param registro
+	 * @return
 	 */
-	public static void run(
-			final Vaca vacasDisponibles[],
-			final double lecheDeseada,
-			final int límiteEspacio,
-			final Registro registro
-	) {
-		run(
-				vacasDisponibles,
-				lecheDeseada,
-				límiteEspacio,
-				// etapa
-				0,
-				// solución temporal para ir explorando
-				new Solucion(vacasDisponibles.length),
-				// contenedor de soluciones
-				registro
-		);
+	public static Registro run(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
+		final Registro registro = new Registro();
+		run(vacasDisponibles, lecheDeseada, límiteEspacio, 0, new Solucion(vacasDisponibles.length), registro);
+		return registro;
 	}
 
-	public static void run(
+	private static void run(
 			final Vaca vacasDisponibles[],
 			final double lecheDeseada,
 			final int límiteEspacio,
@@ -154,16 +141,8 @@ public class Main {
 
 			System.out.printf("La primera solución encontrada es: %s.\n", primera);
 
-			// contenedor de soluciones
-			final Registro registro = new Registro();
+			final Registro registro = run(vacas, lecheDeseada, espacioDisponible);
 
-			run(
-					vacas,
-					lecheDeseada,
-					espacioDisponible,
-					registro
-			);
-		
 			System.out.println(registro);
 
 		} catch (FileNotFoundException e) {
