@@ -45,7 +45,7 @@ public class Solucion implements Comparable<Solucion> {
 	 * @param nueva --> Vaca a añadir
 	 * @param posición --> Posición dentro del vector donde debemos colocar a la vaca
 	 */
-	public void añadirVaca(final Vaca nueva, final int posición) {
+	public Vaca añadirVaca(final Vaca nueva, final int posición) {
 		final Vaca anterior = vacas[posición];
 
 		if (anterior != null) {
@@ -59,6 +59,7 @@ public class Solucion implements Comparable<Solucion> {
 			consumoEspacio += nueva.getOcupaEspacio();
 			producciónLeche += nueva.getProducciónLeche();
 		}
+		return anterior;
 	}
 	
 	@Override
