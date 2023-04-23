@@ -7,7 +7,7 @@ import vaca.Vaca;
  * </p>
  * @author Samuel Espejo Gil, Noelia Díaz Alejo Alejo 
  */
-public class Solucion implements Comparable<Solucion> {
+public class Solucion implements Comparable<Solucion>, Cloneable {
 	private Vaca[] vacas;
 
 	private int consumoEspacio = 0;
@@ -19,19 +19,13 @@ public class Solucion implements Comparable<Solucion> {
 		this.vacas = new Vaca[size];
 	}
 	
-	/**
-	 * <p>
-	 * Crea una copia de la Solución.
-	 * <em>No se copian los objetos Vaca, se guardan como referencia.</em>
-	 * </p>
-	 * @param copia
-	 */
-	public Solucion(final Solucion copia) {
-		super();
-		this.vacas = new Vaca[copia.length()];
+	@Override
+	public Solucion clone() {
+		Solucion copia = new Solucion(vacas.length);
 		for (int i = 0; i < vacas.length; i++) {
-			this.añadirVaca(copia.getVaca(i), i);
+			copia.añadirVaca(vacas[i], i);
 		}
+		return copia;
 	}
 	
 	public Vaca getVaca(final int posición) {

@@ -19,9 +19,9 @@ public class Registro {
 	public void contemplarSolución(final Solucion nueva) {
 		if (mejor == null) {
 			// creamos una copia
-			mejor = new Solucion(nueva);
+			mejor = nueva.clone();
 		} else if (mejor.compareTo(nueva) < 0) {
-			mejor = new Solucion(nueva);
+			mejor = nueva.clone();
 		}
 		
 		cuentaSoluciones++;
