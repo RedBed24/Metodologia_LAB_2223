@@ -74,15 +74,15 @@ public class Main {
 	 */
 	public static Registro run(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
 		final Registro registro = new Registro();
-		run(vacasDisponibles, lecheDeseada, límiteEspacio, 0, new Solucion(vacasDisponibles.length), registro);
+		run(0, vacasDisponibles, lecheDeseada, límiteEspacio, new Solucion(vacasDisponibles.length), registro);
 		return registro;
 	}
 
 	private static void run(
+			final int etapa,
 			final Vaca vacasDisponibles[],
 			final double lecheDeseada,
 			final int límiteEspacio,
-			final int etapa,
 			final Solucion solucion,
 			final Registro posiblesSoluciones
 	) {
@@ -103,13 +103,13 @@ public class Main {
 				solucion.añadirVaca(vacaEtapa, etapa); 
 
 				run(
+						// avanzamos la etapa
+						etapa + 1,
 						vacasDisponibles,
 						// actualizamos la cantidad de leche deseada
 						lecheDeseada - vacaEtapa.getProducciónLeche(),
 						// actualizamos el espacio que gastamos
 						límiteEspacio - vacaEtapa.getOcupaEspacio(),
-						// avanzamos la etapa
-						etapa + 1,
 						solucion,
 						posiblesSoluciones
 				);
@@ -119,11 +119,11 @@ public class Main {
 			solucion.quitarVaca(etapa);
 
 			run(
+					// sólo avanzamos la etapa
+					etapa + 1,
 					vacasDisponibles,
 					lecheDeseada,
 					límiteEspacio,
-					// sólo avanzamos la etapa
-					etapa + 1,
 					solucion,
 					posiblesSoluciones
 			);
