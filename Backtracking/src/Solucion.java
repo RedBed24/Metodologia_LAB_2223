@@ -62,6 +62,18 @@ public class Solucion implements Comparable<Solucion> {
 		return anterior;
 	}
 	
+	public Vaca quitarVaca(final int posición) {
+		final Vaca anterior = vacas[posición];
+
+		if (anterior != null) {
+			consumoEspacio -= anterior.getOcupaEspacio();
+			producciónLeche -= anterior.getProducciónLeche();
+		}
+
+		vacas[posición] = null;
+		return anterior;
+	}
+	
 	@Override
 	public int compareTo(final Solucion otra) {
 		return Double.compare(producciónLeche, otra.getProducciónLeche());

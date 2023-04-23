@@ -71,7 +71,7 @@ public class Main {
 			}
 
 			// exploramos la solución de no añadir la vaca
-			solucion.añadirVaca(null, etapa);
+			solucion.quitarVaca(etapa);
 
 			run(
 					vacasDisponibles,
