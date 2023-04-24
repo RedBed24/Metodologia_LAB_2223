@@ -18,10 +18,11 @@ public class Main {
 			final int límiteEspacio,
 			final Solucion solucion
 	) {
-		boolean solucionEncontrada = lecheDeseada <= 0;
+		boolean solucionEncontrada = false;
 
-		// si no quedan más vacas sobre las que dedicir, hemos decidido por todas o ya hemos llegado a una solución
-		if (etapa == vacasDisponibles.length || solucionEncontrada) {
+		// si no quedan más vacas sobre las que dedicir
+		if (etapa == vacasDisponibles.length) {
+			solucionEncontrada = lecheDeseada <= 0;
 			// paramos y volvemos
 
 		// si quedan vacas disponibles
