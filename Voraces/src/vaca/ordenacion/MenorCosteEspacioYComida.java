@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import vaca.Vaca;
 
-public class CosteEspacioYComida implements Comparator<Vaca> {
+public class MenorCosteEspacioYComida implements Comparator<Vaca> {
 	/* la comida cuesta 8.7 veces más que el espacio, esto hace que estén al mismo nivel, que el precio tenga en cuenta por igual uno y otro
 	 * Aumentando este hacemos que la comida se valore más que el espacio, es decir, se tenga más en cuenta
 	 * rango = [0, infinito)
@@ -12,7 +12,7 @@ public class CosteEspacioYComida implements Comparator<Vaca> {
 	 * un valor muy alto hace (prácticamente) que no se tenga en cuenta el espacio */
 	private double RELACIÓN_COSTE_COMIDA_ESPACIO;
 	
-	public CosteEspacioYComida(final double RELACIÓN_COSTE_COMIDA_ESPACIO) {
+	public MenorCosteEspacioYComida(final double RELACIÓN_COSTE_COMIDA_ESPACIO) {
 		super();
 		this.RELACIÓN_COSTE_COMIDA_ESPACIO = RELACIÓN_COSTE_COMIDA_ESPACIO;
 	}

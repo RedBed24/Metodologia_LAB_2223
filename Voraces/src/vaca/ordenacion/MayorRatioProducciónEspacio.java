@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import vaca.Vaca;
 
-public class RatioProducciónEspacio implements Comparator<Vaca>{
+public class MayorRatioProducciónEspacio implements Comparator<Vaca>{
 
 	@Override
 	public int compare(final Vaca o1, final Vaca o2) {
