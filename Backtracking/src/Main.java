@@ -5,63 +5,34 @@ import vaca.Vaca;
 
 public class Main {
 
-	public static Solucion runA(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
-		final Solucion primera = new Solucion(vacasDisponibles.length);
-		runA(0, vacasDisponibles, lecheDeseada, límiteEspacio, primera);
-		return primera;
+	public static OrientadoSolucion runA(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
+		final OrientadoSolucion solucion = new OrientadoSolucion();
+		runA(0, -1, vacasDisponibles, lecheDeseada, límiteEspacio, solucion);
+		return solucion;
 	}
-
-	private static boolean runA(
+	
+	public static boolean runA(
 			final int etapa,
+			final int últimoElegido,
 			final Vaca vacasDisponibles[],
 			final double lecheDeseada,
 			final int límiteEspacio,
-			final Solucion solucion
+			final OrientadoSolucion solucion
 	) {
-		boolean solucionEncontrada = false;
-
-		// si no quedan más vacas sobre las que dedicir
-		if (etapa == vacasDisponibles.length) {
-			solucionEncontrada = lecheDeseada <= 0;
-			// paramos y volvemos
-
-		// si quedan vacas disponibles
+		boolean soluciónEncontrada = lecheDeseada <= 0;
+		if (últimoElegido == vacasDisponibles.length) {
+			// ya no quedan elementos por coger en el conjunto
 		} else {
-			// obtenemos la vaca correspondiente
-			Vaca vacaEtapa = vacasDisponibles[etapa];
-
-			// vemos si es viable
-			if (vacaEtapa.getOcupaEspacio() <= límiteEspacio) {
-				solucion.añadirVaca(vacaEtapa, etapa); 
-
-				solucionEncontrada = runA(
-						// avanzamos la etapa
-						etapa + 1,
-						vacasDisponibles,
-						// actualizamos la cantidad de leche deseada
-						lecheDeseada - vacaEtapa.getProducciónLeche(),
-						// actualizamos el espacio que gastamos
-						límiteEspacio - vacaEtapa.getOcupaEspacio(),
-						solucion
-				);
-			}
-
-			if (!solucionEncontrada) {
-				// exploramos la solución de no añadir la vaca
-				solucion.quitarVaca(etapa);
-
-				solucionEncontrada = runA(
-						// sólo avanzamos la etapa
-						etapa + 1,
-						vacasDisponibles,
-						lecheDeseada,
-						límiteEspacio,
-						solucion
-				);
+			for (int i = últimoElegido + 1; i < vacasDisponibles.length && !soluciónEncontrada; i++) {
+				Vaca añadir = vacasDisponibles[i];
+				if (añadir.getOcupaEspacio() <= límiteEspacio) {
+					solucion.add(añadir);
+					soluciónEncontrada = runA(etapa + 1, i, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucion);
+					solucion.pop();
+				}
 			}
 		}
-
-		return solucionEncontrada;
+		return soluciónEncontrada;
 	}
 
 	/**
@@ -138,7 +109,7 @@ public class Main {
 			final double lecheDeseada = lecturadatos.Usuario.obtenerLecheDeseada();
 			final int espacioDisponible = lecturadatos.Constantes.ESPACIO_DISPONIBLE;
 
-			final Solucion primera = runA(vacas, lecheDeseada, espacioDisponible);
+			final OrientadoSolucion primera = runA(vacas, lecheDeseada, espacioDisponible);
 
 			if (primera.getProducciónLeche() >= lecheDeseada) {
 				System.out.printf("La primera solución encontrada es: %s.\n", primera);
