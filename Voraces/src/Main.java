@@ -7,17 +7,6 @@ import vaca.Vaca;
 
 public class Main {
 	
-	public static double calcularRatioPromedioEspacioComida(final Vaca vacas[]) {
-		// TODO: El problema de esto es la generalidad, otro tipo de elementos, o más dispersos??
-		int espacio = 0;
-		int comida = 0;
-		for (Vaca vaca : vacas) {
-			espacio += vaca.getOcupaEspacio();
-			comida += vaca.getConsumoComida();
-		}
-		return espacio / (double) comida;
-	}
-
 	public static Solucion run(final Vaca vacas[], int espacioDisponible) {
 		final Solucion vacasSeleccionadas = new Solucion();
 		int índiceVacaActual = 0;
@@ -51,7 +40,6 @@ public class Main {
 
 			final Vector<Comparator<Vaca>> comparators = new Vector<>(2);
 				comparators.add(new vaca.ordenacion.MayorRatioProducciónEspacio());
-				comparators.add(new vaca.ordenacion.MenorCosteEspacioYComida(calcularRatioPromedioEspacioComida(vacas)));
 				comparators.add(new vaca.ordenacion.MenorEspacioYComida());
 
 			Solucion vacasSeleccionadas;
