@@ -55,14 +55,14 @@ public class Main {
 			final Vaca vacasDisponibles[],
 			final double lecheDeseada,
 			final int límiteEspacio,
-			final Solucion solucion,
+			final Solucion solucionTemporal,
 			final Registro posiblesSoluciones
 	) {
 		// si no quedan más vacas sobre las que dedicir, hemos decidido por todas
 		if (etapa == vacasDisponibles.length) {
 			// si es una posible solución
 			if (lecheDeseada <= 0) {
-				posiblesSoluciones.contemplarSolución(solucion);
+				posiblesSoluciones.contemplarSolución(solucionTemporal);
 			}
 
 		// si quedan vacas disponibles
@@ -72,7 +72,7 @@ public class Main {
 
 			// vemos si es viable
 			if (vacaEtapa.getOcupaEspacio() <= límiteEspacio) {
-				solucion.añadirVaca(vacaEtapa, etapa); 
+				solucionTemporal.añadirVaca(vacaEtapa, etapa); 
 
 				run(
 						// avanzamos la etapa
@@ -82,13 +82,13 @@ public class Main {
 						lecheDeseada - vacaEtapa.getProducciónLeche(),
 						// actualizamos el espacio que gastamos
 						límiteEspacio - vacaEtapa.getOcupaEspacio(),
-						solucion,
+						solucionTemporal,
 						posiblesSoluciones
 				);
 			}
 
 			// exploramos la solución de no añadir la vaca
-			solucion.quitarVaca(etapa);
+			solucionTemporal.quitarVaca(etapa);
 
 			run(
 					// sólo avanzamos la etapa
@@ -96,7 +96,7 @@ public class Main {
 					vacasDisponibles,
 					lecheDeseada,
 					límiteEspacio,
-					solucion,
+					solucionTemporal,
 					posiblesSoluciones
 			);
 		}
