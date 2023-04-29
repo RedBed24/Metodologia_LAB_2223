@@ -15,7 +15,7 @@ import vaca.Vaca;
  * Clase que se encarga de la salida y entrada en ficheros.
  * </p>
  * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
- * @version 0
+ * @version 1
  * @since 2023-03-20
  */
 public class Fichero {
@@ -23,11 +23,6 @@ public class Fichero {
 	/**
 	 * <p>
 	 * Método encargado de leer el fichero que contiene los datos.
-	 * </p>
-	 * <h3>Estudio de complejidad:<h3>
-	 * <p>
-	 * Los cálculos se harán bajo la suposición de que <em>todas</em> las operaciones, excepto las llamadas a otras funciones estudiadas, tienen coste 1.
-	 * La complejidad es O(n), siendo n el número de líneas que hay en el fichero.
 	 * </p>
 	 * @param pahtname El camino y nombre al fichero a leer
 	 * @return array de Vacas leídas

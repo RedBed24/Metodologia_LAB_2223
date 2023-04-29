@@ -3,8 +3,8 @@
  * <p>
  * Clase para llevar un registro de las soluciones encontradas.
  * </p>
- * @author Samuel Espejo Gil, Noelia Díaz Alejo Alejo 
- *
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @since 2023-03-20
  */
 public class Registro {
 	private Solucion mejor;
@@ -12,9 +12,9 @@ public class Registro {
 
 	/**
 	 * <p>
-	 * Guarda <emp>una copia</em> de la primera solución, la mejor y cuenta todas las que le pasemos.
+	 * Guarda <emp>una copia</em> de la mejor solución y cuenta todas las que le pasemos.
 	 * </p>
-	 * @param nueva --> Una nueva solución a contemplar
+	 * @param nueva Una nueva solución a contemplar
 	 */
 	public void contemplarSolución(final Solucion nueva) {
 		if (mejor == null) {

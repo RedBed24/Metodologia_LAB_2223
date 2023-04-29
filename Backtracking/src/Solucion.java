@@ -5,20 +5,45 @@ import vaca.Vaca;
  * Clase para representar una posible solución al problema.
  * Contiene las vacas de la solución y las estadísticas de Espacio y Leche totales.
  * </p>
- * @author Samuel Espejo Gil, Noelia Díaz Alejo Alejo 
+ * <p>
+ * Usa un array que no se contempla que pueda crecer para guardar las vacas.
+ * Se reserva memoria en la creación del objeto.
+ * </p>
+ * <h3>Implements:</h3>
+ * <ul>
+ * <li>Comparable&ltSolucion&gt: Permite comparar 2 soluciones para ver cuál es mejor</li>
+ * <li>Cloneable: Permite clonar la solución dada</li>
+ * </ul>
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @since 2023-03-20
  */
 public class Solucion implements Comparable<Solucion>, Cloneable {
+	// estructura para guardar las vacas
 	private Vaca[] vacas;
 
+	// estadísticas de la solución, se mide en las mismas unidades que las estadísticas de las vacas
 	private int consumoEspacio = 0;
 	private double producciónLeche = 0;
 	
 
+	/**
+	 * <p>
+	 * Constructor para crear una nueva solución.
+	 * </p>
+	 * @param size Tamaño del array de vacas.
+	 */
 	public Solucion(final int size) {
 		super();
 		this.vacas = new Vaca[size];
 	}
 	
+	/**
+	 * <p>
+	 * Crea una copia de la solución.
+	 * De esta forma, los cambios en el array de una solución y la copia no se ven afectados.
+	 * <em>No se hace una copia de las vacas.</em>
+	 * </p>
+	 */
 	@Override
 	public Solucion clone() {
 		Solucion copia = new Solucion(vacas.length);
@@ -28,10 +53,6 @@ public class Solucion implements Comparable<Solucion>, Cloneable {
 		return copia;
 	}
 	
-	public Vaca getVaca(final int posición) {
-		return vacas[posición];
-	}
-
 	/**
 	 * <p>
 	 * Añade una vaca a la solución con la posición indicada y actualiza las estadísticas de la solución.

@@ -4,6 +4,13 @@ import java.util.Comparator;
 
 import vaca.Vaca;
 
+/**
+ * <p>
+ * Clase que compara 2 vacas, da prioridad a aquellas con mayor producción y menor espacio.
+ * </p>
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @since 2023-04-29
+ */
 public class MayorRatioProducciónEspacio implements Comparator<Vaca>{
 
 	@Override

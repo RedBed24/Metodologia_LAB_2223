@@ -5,8 +5,23 @@ import java.util.Vector;
 
 import vaca.Vaca;
 
+/**
+ * <p>
+ * Clase destinada a realizar los algoritmos principales.
+ * </p>
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @since 2023-03-20
+ */
 public class Main {
 	
+	/**
+	 * <p>
+	 * Método Voraz que intenta resolver el problema propuesto.
+	 * </p>
+	 * @param vacas Array de vacas disponibles previamente ordenadas.
+	 * @param espacioDisponible Limitante en las mismas unidades que las vacas dado.
+	 * @return Solucion con las vacas seleccionasdas
+	 */
 	public static Solucion run(final Vaca vacas[], int espacioDisponible) {
 		final Solucion vacasSeleccionadas = new Solucion();
 		int índiceVacaActual = 0;
@@ -35,7 +50,6 @@ public class Main {
 		final String nombreFicheroDatos = lecturadatos.Constantes.PATHNAME_VACAS;
 		try {
 			final Vaca vacas[] = lecturadatos.Fichero.leerVacas(nombreFicheroDatos);
-
 			final int espacioDisponible = lecturadatos.Usuario.obtenerEspacioDisponible();
 
 			final Vector<Comparator<Vaca>> comparators = new Vector<>(2);

@@ -24,11 +24,6 @@ public class Fichero {
 	 * <p>
 	 * Método encargado de leer el fichero que contiene los datos.
 	 * </p>
-	 * <h3>Estudio de complejidad:<h3>
-	 * <p>
-	 * Los cálculos se harán bajo la suposición de que <em>todas</em> las operaciones, excepto las llamadas a otras funciones estudiadas, tienen coste 1.
-	 * La complejidad es O(n), siendo n el número de líneas que hay en el fichero.
-	 * </p>
 	 * @param pahtname El camino y nombre al fichero a leer
 	 * @return array de Vacas leídas
 	 * @throws FileNotFoundException En caso de no encontrar el fichero con el pathname dado

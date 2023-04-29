@@ -3,12 +3,42 @@ import java.util.NoSuchElementException;
 
 import vaca.Vaca;
 
+/**
+ * <p>
+ * Clase destinada a realizar los algoritmos principales.
+ * </p>
+ * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
+ * @since 2023-03-20
+ */
 public class Main {
 
+	/**
+	 * <p>
+	 * Abstrae la primera llamada al algoritmo de Backtracking del apartado A.
+	 * Resuelve el problema propuesto:
+	 * Listar la primera solución.
+	 * </p>
+	 * @param vacasDisponibles Array de vacas disponibles
+	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
+	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
+	 * @return primera Solucion encontrada en caso de que exista. null si no existe solución
+	 */
 	public static OrientadoSolucion runA(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
 		return runA(0, vacasDisponibles, lecheDeseada, límiteEspacio, new OrientadoSolucion());
 	}
 	
+	/**
+	 * <p>
+	 * Algoritmo Backtracing orientado a la solución que resuelve el problema del apartado A:
+	 * Listar la primera solución.
+	 * </p>
+	 * @param siguienteAElegir Índice de aquella vaca por la que empezaremos a contemplar cuál va a entrar a la solución en esta etapa
+	 * @param vacasDisponibles Array de vacas disponibles
+	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
+	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
+	 * @param solucionTemporal Solución temporal sobre la que iremos añadiendo y quitando vacas
+	 * @return primera Solucion encontrada en caso de que exista. null si no existe solución
+	 */
 	public static OrientadoSolucion runA(
 			final int siguienteAElegir,
 			final Vaca vacasDisponibles[],
@@ -16,13 +46,20 @@ public class Main {
 			final int límiteEspacio,
 			final OrientadoSolucion solucionTemporal
 	) {
+		// si es una solución, se copia
 		OrientadoSolucion primera = lecheDeseada > 0 ? null : solucionTemporal.clone();
 
+		// vemos las vacas que nos quedan por probar si es que no hemos encontardo ya una solución
 		for (int i = siguienteAElegir; i < vacasDisponibles.length && primera == null; i++) {
 			Vaca añadir = vacasDisponibles[i];
+			
+			// vemos si es viable
 			if (añadir.getOcupaEspacio() <= límiteEspacio) {
+				// la añadimos
 				solucionTemporal.add(añadir);
+				// exploramos esta rama
 				primera = runA(i + 1, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionTemporal);
+				// volvemos al estado inicial
 				solucionTemporal.pop();
 			}
 		}
@@ -31,12 +68,14 @@ public class Main {
 
 	/**
 	 * <p>
-	 * Abstrae la primera llamada al algoritmo.
+	 * Abstrae la primera llamada al algoritmo de Backtracking del apartado B y C.
+	 * Resuelve el problema propuesto:
+	 * Contar las posiblidades que cumplan los limitantes y obtener la mejor solución.
 	 * </p>
-	 * @param vacasDisponibles
-	 * @param lecheDeseada
-	 * @param límiteEspacio
-	 * @return
+	 * @param vacasDisponibles Array de vacas disponibles
+	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
+	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
+	 * @return Registro de las soluciones encontradas y la mejor
 	 */
 	public static Registro run(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
 		final Registro registro = new Registro();
@@ -44,6 +83,18 @@ public class Main {
 		return registro;
 	}
 
+	/**
+	 * <p>
+	 * Algoritmo Backtracing orientado a elementos que resuelve el problema del apartado B y C:
+	 * Contar las posiblidades que cumplan los limitantes y obtener la mejor solución.
+	 * </p>
+	 * @param etapa Etapa en la que nos encontramos, indica sobre qué vaca de las disponibles nos toca elegir Etapa en la que nos encontramos, indica sobre qué vaca de las disponibles nos toca elegir
+	 * @param vacasDisponibles Array de vacas disponibles
+	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
+	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
+	 * @param solucionTemporal Solución temporal sobre la que iremos añadiendo y quitando vacas
+	 * @param posiblesSoluciones Registro que lleva la cuenta de las soluciones encontradas y la mejor solución hasta el momento
+	 */
 	private static void run(
 			final int etapa,
 			final Vaca vacasDisponibles[],
