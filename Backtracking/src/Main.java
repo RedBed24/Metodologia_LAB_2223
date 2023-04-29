@@ -6,31 +6,24 @@ import vaca.Vaca;
 public class Main {
 
 	public static OrientadoSolucion runA(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
-		final OrientadoSolucion solucionTemporal = new OrientadoSolucion();
-		final OrientadoSolucion primera = runA(0, -1, vacasDisponibles, lecheDeseada, límiteEspacio, solucionTemporal);
-		return primera;
+		return runA(0, vacasDisponibles, lecheDeseada, límiteEspacio, new OrientadoSolucion());
 	}
 	
 	public static OrientadoSolucion runA(
-			final int etapa,
-			final int últimoElegido,
+			final int siguienteAElegir,
 			final Vaca vacasDisponibles[],
 			final double lecheDeseada,
 			final int límiteEspacio,
 			final OrientadoSolucion solucionTemporal
 	) {
-		OrientadoSolucion primera = null;
-		if (últimoElegido == vacasDisponibles.length - 1 || lecheDeseada <= 0) {
-			// ya no quedan elementos por coger en el conjunto
-			primera = solucionTemporal.clone();
-		} else {
-			for (int i = últimoElegido + 1; i < vacasDisponibles.length && primera == null; i++) {
-				Vaca añadir = vacasDisponibles[i];
-				if (añadir.getOcupaEspacio() <= límiteEspacio) {
-					solucionTemporal.add(añadir);
-					primera = runA(etapa + 1, i, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionTemporal);
-					solucionTemporal.pop();
-				}
+		OrientadoSolucion primera = lecheDeseada > 0 ? null : solucionTemporal.clone();
+
+		for (int i = siguienteAElegir; i < vacasDisponibles.length && primera == null; i++) {
+			Vaca añadir = vacasDisponibles[i];
+			if (añadir.getOcupaEspacio() <= límiteEspacio) {
+				solucionTemporal.add(añadir);
+				primera = runA(i + 1, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionTemporal);
+				solucionTemporal.pop();
 			}
 		}
 		return primera;
@@ -112,7 +105,7 @@ public class Main {
 
 			final OrientadoSolucion primera = runA(vacas, lecheDeseada, espacioDisponible);
 
-			if (primera.getProducciónLeche() >= lecheDeseada) {
+			if (primera != null) {
 				System.out.printf("La primera solución encontrada es: %s.\n", primera);
 
 				final Registro registro = run(vacas, lecheDeseada, espacioDisponible);
