@@ -29,6 +29,6 @@ public class Registro {
 	
 	@Override
 	public String toString() {
-		return String.format("Mejor: %s\nTotal: %d soluciones factibles de %.0f permutaciones totales (%.3f%%).", mejor, cuentaSoluciones, Math.pow(2, mejor.length()), 100 * (cuentaSoluciones / Math.pow(2, mejor.length())));
+		return String.format("Mejor: %s\nTotal: %d soluciones factibles de %.0f posibilidades totales (%.3f%%).", mejor, cuentaSoluciones, Math.pow(2, mejor.length()), 100 * (cuentaSoluciones / Math.pow(2, mejor.length())));
 	}
 }
