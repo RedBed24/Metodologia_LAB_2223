@@ -6,33 +6,34 @@ import vaca.Vaca;
 public class Main {
 
 	public static OrientadoSolucion runA(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
-		final OrientadoSolucion solucion = new OrientadoSolucion();
-		runA(0, -1, vacasDisponibles, lecheDeseada, límiteEspacio, solucion);
-		return solucion;
+		final OrientadoSolucion solucionTemporal = new OrientadoSolucion();
+		final OrientadoSolucion primera = runA(0, -1, vacasDisponibles, lecheDeseada, límiteEspacio, solucionTemporal);
+		return primera;
 	}
 	
-	public static boolean runA(
+	public static OrientadoSolucion runA(
 			final int etapa,
 			final int últimoElegido,
 			final Vaca vacasDisponibles[],
 			final double lecheDeseada,
 			final int límiteEspacio,
-			final OrientadoSolucion solucion
+			final OrientadoSolucion solucionTemporal
 	) {
-		boolean soluciónEncontrada = lecheDeseada <= 0;
-		if (últimoElegido == vacasDisponibles.length) {
+		OrientadoSolucion primera = null;
+		if (últimoElegido == vacasDisponibles.length - 1 || lecheDeseada <= 0) {
 			// ya no quedan elementos por coger en el conjunto
+			primera = solucionTemporal.clone();
 		} else {
-			for (int i = últimoElegido + 1; i < vacasDisponibles.length && !soluciónEncontrada; i++) {
+			for (int i = últimoElegido + 1; i < vacasDisponibles.length && primera == null; i++) {
 				Vaca añadir = vacasDisponibles[i];
 				if (añadir.getOcupaEspacio() <= límiteEspacio) {
-					solucion.add(añadir);
-					soluciónEncontrada = runA(etapa + 1, i, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucion);
-					solucion.pop();
+					solucionTemporal.add(añadir);
+					primera = runA(etapa + 1, i, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionTemporal);
+					solucionTemporal.pop();
 				}
 			}
 		}
-		return soluciónEncontrada;
+		return primera;
 	}
 
 	/**
