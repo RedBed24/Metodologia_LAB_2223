@@ -17,10 +17,7 @@ public class Registro {
 	 * @param nueva Una nueva solución a contemplar
 	 */
 	public void contemplarSolución(final Solucion nueva) {
-		if (mejor == null) {
-			// creamos una copia
-			mejor = nueva.clone();
-		} else if (mejor.compareTo(nueva) < 0) {
+		if (mejor == null || mejor.compareTo(nueva) < 0) {
 			mejor = nueva.clone();
 		}
 		
