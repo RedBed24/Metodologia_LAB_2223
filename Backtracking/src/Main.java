@@ -24,7 +24,9 @@ public class Main {
 	 * @return primera Solucion encontrada en caso de que exista. null si no existe solución
 	 */
 	public static OrientadoSolucion runA(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
-		return runA(0, vacasDisponibles, lecheDeseada, límiteEspacio, new OrientadoSolucion());
+		OrientadoSolucion solución = new OrientadoSolucion();
+		runA(0, vacasDisponibles, lecheDeseada, límiteEspacio, solución);
+		return solución;
 	}
 	
 	/**
@@ -39,7 +41,7 @@ public class Main {
 	 * @param solucionTemporal Solución temporal sobre la que iremos añadiendo y quitando vacas
 	 * @return primera Solucion encontrada en caso de que exista. null si no existe solución
 	 */
-	public static OrientadoSolucion runA(
+	public static boolean runA(
 			final int siguienteAElegir,
 			final Vaca vacasDisponibles[],
 			final double lecheDeseada,
@@ -47,10 +49,10 @@ public class Main {
 			final OrientadoSolucion solucionTemporal
 	) {
 		// si es una solución, se copia
-		OrientadoSolucion primera = lecheDeseada > 0 ? null : solucionTemporal.clone();
+		boolean soluciónEncontrada = lecheDeseada <= 0;
 
 		// vemos las vacas que nos quedan por probar si es que no hemos encontardo ya una solución
-		for (int i = siguienteAElegir; i < vacasDisponibles.length && primera == null; i++) {
+		for (int i = siguienteAElegir; i < vacasDisponibles.length && !soluciónEncontrada; i++) {
 			Vaca añadir = vacasDisponibles[i];
 			
 			// vemos si es viable
@@ -58,12 +60,15 @@ public class Main {
 				// la añadimos
 				solucionTemporal.add(añadir);
 				// exploramos esta rama
-				primera = runA(i + 1, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionTemporal);
-				// volvemos al estado inicial
-				solucionTemporal.pop();
+				soluciónEncontrada = runA(i + 1, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionTemporal);
+				
+				if (!soluciónEncontrada) {
+					// volvemos al estado inicial
+					solucionTemporal.pop();
+				}
 			}
 		}
-		return primera;
+		return soluciónEncontrada;
 	}
 
 	/**
@@ -156,7 +161,7 @@ public class Main {
 
 			final OrientadoSolucion primera = runA(vacas, lecheDeseada, espacioDisponible);
 
-			if (primera != null) {
+			if (primera.getProducciónLeche() > lecheDeseada) {
 				System.out.printf("La primera solución encontrada es: %s.\n", primera);
 
 				final Registro registro = run(vacas, lecheDeseada, espacioDisponible);
