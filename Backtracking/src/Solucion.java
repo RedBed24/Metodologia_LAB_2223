@@ -71,8 +71,10 @@ public class Solucion implements Comparable<Solucion>, Cloneable {
 
 		vacas[posición] = nueva;
 
-		consumoEspacio += nueva.getOcupaEspacio();
-		producciónLeche += nueva.getProducciónLeche();
+		if (nueva != null) {
+			consumoEspacio += nueva.getOcupaEspacio();
+			producciónLeche += nueva.getProducciónLeche();
+		}
 
 		return anterior;
 	}
