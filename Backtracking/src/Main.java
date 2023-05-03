@@ -21,11 +21,11 @@ public class Main {
 	 * @param vacasDisponibles Array de vacas disponibles
 	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
 	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
+	 * @return solución Solución que se ha encontrado, si no hay niguna, se devuelve null.
 	 */
 	public static OrientadoSolucion apartadoA(final Vaca vacasDisponibles[], double lecheDeseada, int límiteEspacio) {
 		OrientadoSolucion solución = new OrientadoSolucion();
-		apartadoA(0, vacasDisponibles, lecheDeseada, límiteEspacio, solución);
-		return solución;
+		return apartadoA(0, vacasDisponibles, lecheDeseada, límiteEspacio, solución) ? solución : null;
 	}
 	
 	/**
@@ -157,7 +157,7 @@ public class Main {
 
 			final OrientadoSolucion primera = apartadoA(vacas, lecheDeseada, espacioDisponible);
 
-			if (primera.getProducciónLeche() > lecheDeseada) {
+			if (primera != null) {
 				System.out.printf("La primera solución encontrada es: %s.\n", primera);
 			} else {
 				System.out.println("No se ha encontrado una solución.\nEl límite de espacio es muy pequeño y la producción de leche desesada es muy grande.");
