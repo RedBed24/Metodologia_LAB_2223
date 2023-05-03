@@ -37,7 +37,7 @@ public class Main {
 	 * @param vacasDisponibles Array de vacas disponibles
 	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
 	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
-	 * @param solucionEncontrada Solución temporal sobre la que iremos añadiendo y quitando vacas
+	 * @param solucion Solución temporal sobre la que iremos añadiendo y quitando vacas
 	 * @return boolean indicando si se ha encontrado una solución o no
 	 */
 	public static boolean apartadoA(
@@ -45,9 +45,9 @@ public class Main {
 			final Vaca vacasDisponibles[],
 			double lecheDeseada,
 			int límiteEspacio,
-			OrientadoSolucion solucionEncontrada
+			OrientadoSolucion solucion
 	) {
-		// si es una solución, se copia
+		// comprobamos si hemos encontrado una solución
 		boolean soluciónEncontrada = lecheDeseada <= 0;
 
 		// vemos las vacas que nos quedan por probar si es que no hemos encontardo ya una solución
@@ -57,13 +57,13 @@ public class Main {
 			// vemos si es viable
 			if (añadir.getOcupaEspacio() <= límiteEspacio) {
 				// la añadimos
-				solucionEncontrada.add(añadir);
+				solucion.add(añadir);
 				// exploramos esta rama
-				soluciónEncontrada = apartadoA(i + 1, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionEncontrada);
+				soluciónEncontrada = apartadoA(i + 1, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucion);
 				
 				if (!soluciónEncontrada) {
 					// volvemos al estado inicial
-					solucionEncontrada.pop();
+					solucion.pop();
 				}
 			}
 		}
