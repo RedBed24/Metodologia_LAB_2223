@@ -11,18 +11,16 @@ import vaca.Vaca;
  * </p>
  * <h3>Implements:</h3>
  * <ul>
- * <li>Comparable&ltSolucion&gt: Permite comparar 2 soluciones para ver cuál es mejor</li>
  * <li>Cloneable: Permite clonar la solución dada</li>
  * </ul>
  * @author Noelia Díaz-Alejo Alejo, Samuel Espejo Gil 
  * @since 2023-03-20
  */
-public class Solucion implements Comparable<Solucion>, Cloneable {
+public class Solucion implements Cloneable {
 	// estructura para guardar las vacas
 	private Vaca[] vacas;
 
 	// estadísticas de la solución, se mide en las mismas unidades que las estadísticas de las vacas
-	private int consumoEspacio = 0;
 	private double producciónLeche = 0;
 	
 
@@ -67,13 +65,11 @@ public class Solucion implements Comparable<Solucion>, Cloneable {
 		final Vaca anterior = vacas[posición];
 
 		if (anterior != null) {
-			consumoEspacio -= anterior.getOcupaEspacio();
 			producciónLeche -= anterior.getProducciónLeche();
 		}
 
 		vacas[posición] = nueva;
 
-		consumoEspacio += nueva.getOcupaEspacio();
 		producciónLeche += nueva.getProducciónLeche();
 
 		return anterior;
@@ -90,7 +86,6 @@ public class Solucion implements Comparable<Solucion>, Cloneable {
 		final Vaca anterior = vacas[posición];
 
 		if (anterior != null) {
-			consumoEspacio -= anterior.getOcupaEspacio();
 			producciónLeche -= anterior.getProducciónLeche();
 		}
 
@@ -98,16 +93,7 @@ public class Solucion implements Comparable<Solucion>, Cloneable {
 		return anterior;
 	}
 	
-	@Override
-	public int compareTo(final Solucion otra) {
-		return Double.compare(producciónLeche, otra.getProducciónLeche());
-	}
-	
-	public int getConsumoEspacio() { return consumoEspacio; }
-
 	public double getProducciónLeche() { return producciónLeche; }
-	
-	public int length() { return vacas.length; }
 	
 	@Override
 	public String toString() {
@@ -121,7 +107,7 @@ public class Solucion implements Comparable<Solucion>, Cloneable {
 			}
 		}
 		
-		return String.format("%s}, Leche: %.3f, Espacio: %d]", str, producciónLeche, consumoEspacio);
+		return String.format("%s}, Leche: %.3f]", str, producciónLeche);
 	}
 
 }

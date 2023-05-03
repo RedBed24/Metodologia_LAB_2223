@@ -5,7 +5,7 @@ import vaca.Vaca;
 /**
  * <p>
  * Clase para representar una posible solución al problema.
- * Contiene las vacas de la solución y las estadísticas de Espacio y Leche totales.
+ * Contiene las vacas de la solución y la estadística de Leche total.
  * </p>
  * <p>
  * Usa un Stack para guardar las vacas.
@@ -22,7 +22,6 @@ public class OrientadoSolucion implements Cloneable {
 	private Stack<Vaca> vacas;
 	
 	// estadísticas de la solución, se mide en las mismas unidades que las estadísticas de las vacas
-	private int consumoEspacio;
 	private double producciónLeche;
 	
 	
@@ -34,7 +33,6 @@ public class OrientadoSolucion implements Cloneable {
 	public OrientadoSolucion() {
 		super();
 		vacas = new Stack<Vaca>();
-		consumoEspacio = 0;
 		producciónLeche = 0;
 	}
 	
@@ -43,17 +41,13 @@ public class OrientadoSolucion implements Cloneable {
 	 * Constructor para crear una nueva con los parámetros dados.
 	 * </p>
 	 * @param vacas Pila que puede ya contener vacas
-	 * @param consumoEspacio Consumo de espacio de las vacas contenidas en la pila dada
 	 * @param producciónLeche Producción de leche de las vacas contienidas en la pila dada
 	 */
-	public OrientadoSolucion(final Stack<Vaca> vacas, final int consumoEspacio, final double producciónLeche) {
+	public OrientadoSolucion(final Stack<Vaca> vacas, final double producciónLeche) {
 		super();
 		this.vacas = vacas;
-		this.consumoEspacio = consumoEspacio;
 		this.producciónLeche = producciónLeche;
 	}
-
-	public int getConsumoEspacio() { return consumoEspacio; }
 
 	public double getProducciónLeche() { return producciónLeche; }
 
@@ -65,7 +59,6 @@ public class OrientadoSolucion implements Cloneable {
 	 * @return Valor especificado en add(...) in List
 	 */
 	public boolean add(final Vaca nueva) {
-		consumoEspacio += nueva.getOcupaEspacio();
 		producciónLeche += nueva.getProducciónLeche();
 
 		return vacas.add(nueva);
@@ -80,7 +73,6 @@ public class OrientadoSolucion implements Cloneable {
 	public Vaca pop() {
 		final Vaca quitada = vacas.pop();
 
-		consumoEspacio -= quitada.getOcupaEspacio();
 		producciónLeche -= quitada.getProducciónLeche();
 
 		return quitada;
@@ -99,7 +91,7 @@ public class OrientadoSolucion implements Cloneable {
 		for (final Vaca vaca : vacas) {
 			copy.add(vaca);
 		}
-		return new OrientadoSolucion(copy, consumoEspacio, producciónLeche);
+		return new OrientadoSolucion(copy, producciónLeche);
 	}
 
 	@Override
@@ -114,6 +106,6 @@ public class OrientadoSolucion implements Cloneable {
 			}
 		}
 		
-		return String.format("%s}, Leche: %.3f, Espacio: %d]", str, producciónLeche, consumoEspacio);
+		return String.format("%s}, Leche: %.3f]", str, producciónLeche);
 	}
 }

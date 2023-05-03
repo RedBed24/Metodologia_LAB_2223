@@ -72,19 +72,17 @@ public class Main {
 
 	/**
 	 * <p>
-	 * Abstrae la primera llamada al algoritmo de Backtracking del apartado B y C.
+	 * Abstrae la primera llamada al algoritmo de Backtracking del apartado B.
 	 * Resuelve el problema propuesto:
-	 * Contar las posiblidades que cumplan los limitantes y obtener la mejor solución.
+	 * Contar las posiblidades que cumplan los limitantes.
 	 * </p>
 	 * @param vacasDisponibles Array de vacas disponibles
 	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
 	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
-	 * @return Registro de las soluciones encontradas y la mejor
+	 * @return Cuenta de las soluciones encontradas
 	 */
-	public static Registro apartadoBC(final Vaca vacasDisponibles[], double lecheDeseada, int límiteEspacio) {
-		Registro registro = new Registro(lecheDeseada);
-		apartadoBC(0, vacasDisponibles, lecheDeseada, límiteEspacio, new Solucion(vacasDisponibles.length), registro);
-		return registro;
+	public static int apartadoB(final Vaca vacasDisponibles[], double lecheDeseada, int límiteEspacio) {
+		return apartadoB(0, vacasDisponibles, lecheDeseada, límiteEspacio, new Solucion(vacasDisponibles.length), 0);
 	}
 
 	/**
@@ -97,19 +95,22 @@ public class Main {
 	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
 	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
 	 * @param solucionTemporal Solución temporal sobre la que iremos añadiendo y quitando vacas
-	 * @param posiblesSoluciones Registro que lleva la cuenta de las soluciones encontradas y la mejor solución hasta el momento
+	 * @param cuentaSoluciones Cuenta de las solcuciones encontradas
+	 * @return Cuenta de las solciones encontradas
 	 */
-	private static void apartadoBC(
+	private static int apartadoB(
 			int etapa,
 			final Vaca vacasDisponibles[],
 			double lecheDeseada,
 			int límiteEspacio,
 			Solucion solucionTemporal,
-			Registro posiblesSoluciones
+			int cuentaSoluciones
 	) {
 		// si no quedan más vacas sobre las que dedicir, hemos decidido por todas
 		if (etapa == vacasDisponibles.length) {
-			posiblesSoluciones.contemplarSolución(solucionTemporal);
+			if (lecheDeseada <= 0) {
+				cuentaSoluciones++;
+			}
 
 		// si quedan vacas disponibles
 		} else {
@@ -120,7 +121,7 @@ public class Main {
 			if (vacaEtapa.getOcupaEspacio() <= límiteEspacio) {
 				solucionTemporal.añadirVaca(vacaEtapa, etapa); 
 
-				apartadoBC(
+				cuentaSoluciones = apartadoB(
 						// avanzamos la etapa
 						etapa + 1,
 						vacasDisponibles,
@@ -129,23 +130,99 @@ public class Main {
 						// actualizamos el espacio que gastamos
 						límiteEspacio - vacaEtapa.getOcupaEspacio(),
 						solucionTemporal,
-						posiblesSoluciones
+						cuentaSoluciones
 				);
 			}
 
 			// exploramos la solución de no añadir la vaca
 			solucionTemporal.quitarVaca(etapa);
 
-			apartadoBC(
+			cuentaSoluciones = apartadoB(
 					// sólo avanzamos la etapa
 					etapa + 1,
 					vacasDisponibles,
 					lecheDeseada,
 					límiteEspacio,
 					solucionTemporal,
-					posiblesSoluciones
+					cuentaSoluciones
 			);
 		}
+		return cuentaSoluciones;
+	}
+	
+	/**
+	 * <p>
+	 * Abstrae la primera llamada al algoritmo de Backtracking del apartado C.
+	 * Resuelve el problema propuesto:
+	 * Obtener la mejor solución.
+	 * </p>
+	 * @param vacasDisponibles Array de vacas disponibles
+	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
+	 * @return La mejor solución encontrada
+	 */
+	public static Solucion apartadoC(final Vaca vacasDisponibles[], int límiteEspacio) {
+		return apartadoC(0, vacasDisponibles, límiteEspacio, new Solucion(vacasDisponibles.length), new Solucion(vacasDisponibles.length));
+	}
+	
+
+	/**
+	 * <p>
+	 * Algoritmo Backtracing orientado a elementos que resuelve el problema del apartado B y C:
+	 * Contar las posiblidades que cumplan los limitantes y obtener la mejor solución.
+	 * </p>
+	 * @param etapa Etapa en la que nos encontramos, indica sobre qué vaca de las disponibles nos toca elegir Etapa en la que nos encontramos, indica sobre qué vaca de las disponibles nos toca elegir
+	 * @param vacasDisponibles Array de vacas disponibles
+	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
+	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
+	 * @param solucionTemporal Solución temporal sobre la que iremos añadiendo y quitando vacas
+	 * @param mejor La mejor solución encontrada hasta el momento
+	 */
+	private static Solucion apartadoC(
+			int etapa,
+			final Vaca vacasDisponibles[],
+			int límiteEspacio,
+			Solucion solucionTemporal,
+			Solucion mejor
+	) {
+		// si no quedan más vacas sobre las que dedicir, hemos decidido por todas
+		if (etapa == vacasDisponibles.length) {
+			if (mejor.getProducciónLeche() < solucionTemporal.getProducciónLeche()) {
+				mejor = solucionTemporal.clone();
+			}
+
+		// si quedan vacas disponibles
+		} else {
+			// obtenemos la vaca correspondiente
+			Vaca vacaEtapa = vacasDisponibles[etapa];
+
+			// vemos si es viable
+			if (vacaEtapa.getOcupaEspacio() <= límiteEspacio) {
+				solucionTemporal.añadirVaca(vacaEtapa, etapa); 
+
+				mejor = apartadoC(
+						// avanzamos la etapa
+						etapa + 1,
+						vacasDisponibles,
+						// actualizamos el espacio que gastamos
+						límiteEspacio - vacaEtapa.getOcupaEspacio(),
+						solucionTemporal,
+						mejor
+				);
+			}
+
+			// exploramos la solución de no añadir la vaca
+			solucionTemporal.quitarVaca(etapa);
+
+			mejor = apartadoC(
+					// sólo avanzamos la etapa
+					etapa + 1,
+					vacasDisponibles,
+					límiteEspacio,
+					solucionTemporal,
+					mejor
+			);
+		}
+		return mejor;
 	}
 	
 	public static void main (String[] args) {
@@ -159,13 +236,17 @@ public class Main {
 
 			if (primera != null) {
 				System.out.printf("La primera solución encontrada es: %s.\n", primera);
+				
+				final int cuentaSoluciones = apartadoB(vacas, lecheDeseada, espacioDisponible);
+
+				System.out.printf("Total: %d soluciones factibles de %.0f posibilidades totales (%.3f%%).", cuentaSoluciones, Math.pow(2, vacas.length), 100 * (cuentaSoluciones / Math.pow(2, vacas.length)));
 			} else {
 				System.out.println("No se ha encontrado una solución.\nEl límite de espacio es muy pequeño y la producción de leche desesada es muy grande.");
 			}
+			
+			final Solucion mejor = apartadoC(vacas, espacioDisponible);
 
-			final Registro registro = apartadoBC(vacas, lecheDeseada, espacioDisponible);
-
-			System.out.println(registro);
+			System.out.printf("La mejor solución encontrada es: %s\n", mejor);
 
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero \"" + nombreFicheroDatos + "\".");
