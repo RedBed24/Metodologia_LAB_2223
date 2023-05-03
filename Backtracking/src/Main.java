@@ -21,11 +21,10 @@ public class Main {
 	 * @param vacasDisponibles Array de vacas disponibles
 	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
 	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
-	 * @return primera Solucion encontrada en caso de que exista. null si no existe solución
 	 */
-	public static OrientadoSolucion runA(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
+	public static OrientadoSolucion apartadoA(final Vaca vacasDisponibles[], double lecheDeseada, int límiteEspacio) {
 		OrientadoSolucion solución = new OrientadoSolucion();
-		runA(0, vacasDisponibles, lecheDeseada, límiteEspacio, solución);
+		apartadoA(0, vacasDisponibles, lecheDeseada, límiteEspacio, solución);
 		return solución;
 	}
 	
@@ -38,15 +37,15 @@ public class Main {
 	 * @param vacasDisponibles Array de vacas disponibles
 	 * @param lecheDeseada Limitante de la leche en las mismas medidas de las vacas.
 	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
-	 * @param solucionTemporal Solución temporal sobre la que iremos añadiendo y quitando vacas
-	 * @return primera Solucion encontrada en caso de que exista. null si no existe solución
+	 * @param solucionEncontrada Solución temporal sobre la que iremos añadiendo y quitando vacas
+	 * @return boolean indicando si se ha encontrado una solución o no
 	 */
-	public static boolean runA(
-			final int siguienteAElegir,
+	public static boolean apartadoA(
+			int siguienteAElegir,
 			final Vaca vacasDisponibles[],
-			final double lecheDeseada,
-			final int límiteEspacio,
-			final OrientadoSolucion solucionTemporal
+			double lecheDeseada,
+			int límiteEspacio,
+			OrientadoSolucion solucionEncontrada
 	) {
 		// si es una solución, se copia
 		boolean soluciónEncontrada = lecheDeseada <= 0;
@@ -58,13 +57,13 @@ public class Main {
 			// vemos si es viable
 			if (añadir.getOcupaEspacio() <= límiteEspacio) {
 				// la añadimos
-				solucionTemporal.add(añadir);
+				solucionEncontrada.add(añadir);
 				// exploramos esta rama
-				soluciónEncontrada = runA(i + 1, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionTemporal);
+				soluciónEncontrada = apartadoA(i + 1, vacasDisponibles, lecheDeseada - añadir.getProducciónLeche(), límiteEspacio - añadir.getOcupaEspacio(), solucionEncontrada);
 				
 				if (!soluciónEncontrada) {
 					// volvemos al estado inicial
-					solucionTemporal.pop();
+					solucionEncontrada.pop();
 				}
 			}
 		}
@@ -82,9 +81,9 @@ public class Main {
 	 * @param límiteEspacio Limitante del espacio en las mismas medidas de las vacas.
 	 * @return Registro de las soluciones encontradas y la mejor
 	 */
-	public static Registro run(final Vaca vacasDisponibles[], final double lecheDeseada, final int límiteEspacio) {
-		final Registro registro = new Registro();
-		run(0, vacasDisponibles, lecheDeseada, límiteEspacio, new Solucion(vacasDisponibles.length), registro);
+	public static Registro apartadoBC(final Vaca vacasDisponibles[], double lecheDeseada, int límiteEspacio) {
+		Registro registro = new Registro(lecheDeseada);
+		apartadoBC(0, vacasDisponibles, lecheDeseada, límiteEspacio, new Solucion(vacasDisponibles.length), registro);
 		return registro;
 	}
 
@@ -100,20 +99,17 @@ public class Main {
 	 * @param solucionTemporal Solución temporal sobre la que iremos añadiendo y quitando vacas
 	 * @param posiblesSoluciones Registro que lleva la cuenta de las soluciones encontradas y la mejor solución hasta el momento
 	 */
-	private static void run(
-			final int etapa,
+	private static void apartadoBC(
+			int etapa,
 			final Vaca vacasDisponibles[],
-			final double lecheDeseada,
-			final int límiteEspacio,
-			final Solucion solucionTemporal,
-			final Registro posiblesSoluciones
+			double lecheDeseada,
+			int límiteEspacio,
+			Solucion solucionTemporal,
+			Registro posiblesSoluciones
 	) {
 		// si no quedan más vacas sobre las que dedicir, hemos decidido por todas
 		if (etapa == vacasDisponibles.length) {
-			// si es una posible solución
-			if (lecheDeseada <= 0) {
-				posiblesSoluciones.contemplarSolución(solucionTemporal);
-			}
+			posiblesSoluciones.contemplarSolución(solucionTemporal);
 
 		// si quedan vacas disponibles
 		} else {
@@ -124,7 +120,7 @@ public class Main {
 			if (vacaEtapa.getOcupaEspacio() <= límiteEspacio) {
 				solucionTemporal.añadirVaca(vacaEtapa, etapa); 
 
-				run(
+				apartadoBC(
 						// avanzamos la etapa
 						etapa + 1,
 						vacasDisponibles,
@@ -140,7 +136,7 @@ public class Main {
 			// exploramos la solución de no añadir la vaca
 			solucionTemporal.quitarVaca(etapa);
 
-			run(
+			apartadoBC(
 					// sólo avanzamos la etapa
 					etapa + 1,
 					vacasDisponibles,
@@ -159,17 +155,17 @@ public class Main {
 			final double lecheDeseada = lecturadatos.Usuario.obtenerLecheDeseada();
 			final int espacioDisponible = lecturadatos.Constantes.ESPACIO_DISPONIBLE;
 
-			final OrientadoSolucion primera = runA(vacas, lecheDeseada, espacioDisponible);
+			final OrientadoSolucion primera = apartadoA(vacas, lecheDeseada, espacioDisponible);
 
 			if (primera.getProducciónLeche() > lecheDeseada) {
 				System.out.printf("La primera solución encontrada es: %s.\n", primera);
-
-				final Registro registro = run(vacas, lecheDeseada, espacioDisponible);
-
-				System.out.println(registro);
 			} else {
 				System.out.println("No se ha encontrado una solución.\nEl límite de espacio es muy pequeño y la producción de leche desesada es muy grande.");
 			}
+
+			final Registro registro = apartadoBC(vacas, lecheDeseada, espacioDisponible);
+
+			System.out.println(registro);
 
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el fichero \"" + nombreFicheroDatos + "\".");

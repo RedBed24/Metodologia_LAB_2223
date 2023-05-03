@@ -48,7 +48,9 @@ public class Solucion implements Comparable<Solucion>, Cloneable {
 	public Solucion clone() {
 		Solucion copia = new Solucion(vacas.length);
 		for (int i = 0; i < vacas.length; i++) {
-			copia.añadirVaca(vacas[i], i);
+			if (vacas[i] != null) {
+				copia.añadirVaca(vacas[i], i);
+			}
 		}
 		return copia;
 	}
@@ -71,10 +73,8 @@ public class Solucion implements Comparable<Solucion>, Cloneable {
 
 		vacas[posición] = nueva;
 
-		if (nueva != null) {
-			consumoEspacio += nueva.getOcupaEspacio();
-			producciónLeche += nueva.getProducciónLeche();
-		}
+		consumoEspacio += nueva.getOcupaEspacio();
+		producciónLeche += nueva.getProducciónLeche();
 
 		return anterior;
 	}

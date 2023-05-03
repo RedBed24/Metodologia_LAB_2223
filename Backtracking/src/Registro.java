@@ -7,8 +7,14 @@
  * @since 2023-03-20
  */
 public class Registro {
+	private final double lecheDeseada;
 	private Solucion mejor;
 	private int cuentaSoluciones = 0;
+	
+	public Registro(final double lecheDeseada) {
+		super();
+		this.lecheDeseada = lecheDeseada;
+	}
 
 	/**
 	 * <p>
@@ -21,7 +27,10 @@ public class Registro {
 			mejor = nueva.clone();
 		}
 		
-		cuentaSoluciones++;
+		// si es una posible solución
+		if (nueva.getProducciónLeche() >= lecheDeseada) {
+			cuentaSoluciones++;
+		}
 	}
 	
 	@Override
