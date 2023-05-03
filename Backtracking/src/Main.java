@@ -239,7 +239,7 @@ public class Main {
 				
 				final int cuentaSoluciones = apartadoB(vacas, lecheDeseada, espacioDisponible);
 
-				System.out.printf("Total: %d soluciones factibles de %.0f posibilidades totales (%.3f%%).", cuentaSoluciones, Math.pow(2, vacas.length), 100 * (cuentaSoluciones / Math.pow(2, vacas.length)));
+				System.out.printf("Total: %d soluciones factibles de %.0f posibilidades totales (%.3f%%).\n", cuentaSoluciones, Math.pow(2, vacas.length), 100 * (cuentaSoluciones / Math.pow(2, vacas.length)));
 			} else {
 				System.out.println("No se ha encontrado una solución.\nEl límite de espacio es muy pequeño y la producción de leche desesada es muy grande.");
 			}
